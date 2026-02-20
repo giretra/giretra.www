@@ -6,19 +6,28 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'My Docs',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
+			title: 'Giretra',
+			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/giretra' }],
 			sidebar: [
 				{
-					label: 'Guides',
+					label: 'Learn',
 					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', slug: 'guides/example' },
+						{ label: 'Rules', slug: 'learn' },
+						{ label: 'Coming from Belote?', slug: 'coming-from-belote' },
+						{ label: 'Vocabulary', slug: 'vocabulary' },
 					],
 				},
 				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference' },
+					label: 'Build Your Bot',
+					items: [
+						{ label: 'Getting Started', slug: 'build-your-bot' },
+					],
+				},
+				{
+					label: 'Contribute',
+					items: [
+						{ label: 'How to Contribute', slug: 'contribute' },
+					],
 				},
 			],
 		}),
