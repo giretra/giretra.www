@@ -10,10 +10,20 @@
   @apply mx-auto xl:max-w-[1740px]! ;
 }
 .hero-bg {
-  @apply absolute top-0 left-0 w-full -z-10 object-cover;
+  @apply absolute top-0 left-0 w-full -z-10;
+  background: radial-gradient(ellipse at 50% 30%, rgba(45, 138, 78, 0.08), transparent 70%),
+              radial-gradient(ellipse at 80% 0%, rgba(217, 201, 89, 0.04), transparent 50%);
+}
+:root[data-theme="light"] .hero-bg {
+  background: radial-gradient(ellipse at 50% 30%, rgba(45, 138, 78, 0.06), transparent 70%),
+              radial-gradient(ellipse at 80% 0%, rgba(217, 201, 89, 0.03), transparent 50%);
 }
 .doc-bg {
-  @apply  h-screen bg-no-repeat absolute top-0 left-0 w-full -z-10 object-cover;
+  @apply h-screen absolute top-0 left-0 w-full -z-10;
+  background: radial-gradient(ellipse at 50% 0%, rgba(45, 138, 78, 0.05), transparent 60%);
+}
+:root[data-theme="light"] .doc-bg {
+  background: radial-gradient(ellipse at 50% 0%, rgba(45, 138, 78, 0.03), transparent 60%);
 }
 
 .light-text {
