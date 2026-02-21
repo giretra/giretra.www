@@ -1,9 +1,9 @@
 ---
 title: Giretra
-description: An open source game — play, learn, build, contribute.
+description: An open source game -- play, learn, build, contribute.
 template: splash
 hero:
-  tagline: "Your Belote Gasy platform and SDK: Play With Friends or train hard alone, Build Your Own Bots, and Contribute to a Living Open Source Platform."
+  tagline: "Your Belote Gasy platform and SDK: Play with friends or train hard alone, build your own bots, and contribute to a living open source platform."
   actions:
     - text: Play
       link: https://play.giretra.com
@@ -21,3 +21,159 @@ hero:
       icon: github
       variant: secondary
 ---
+
+import Section from "~/components/Section.astro";
+import Card from "~/components/user-components/NewCard.astro";
+import Grid from "~/components/user-components/Grid.astro";
+import LinkButton from "~/components/LinkButton.astro";
+import ListCard from "~/components/user-components/ListCard.astro";
+
+<Section title="Everything you need <span class='light-text'>to get started</span>" description="Giretra is a trick-taking card game from Madagascar, born from the Belote family. Four players, two teams, 32 cards.">
+
+<Grid columns={4}>
+  <Card title="Learn the rules" icon="open-book" iconColor="#7BE1A4">
+    From setup to scoring, everything you need to know to start playing Giretra.
+  </Card>
+  <Card title="Build your bot" icon="rocket" iconColor="#FFD97B">
+    Pour your knowledge into a bot and let it compete for you on the platform.
+  </Card>
+  <Card title="Open source" icon="github" iconColor="#979BFF">
+    Giretra is fully open source. Read the code, fork it, improve it.
+  </Card>
+  <Card title="Play online" icon="external" iconColor="#FF8585">
+    Jump into a game right now at play.giretra.com with friends or solo.
+  </Card>
+</Grid>
+
+</Section>
+
+<Section title="What makes Giretra <span class='light-text'>different</span>" description="If you've played Belote, you're 80% there. Here's the 20% that matters.">
+
+<Grid columns={3}>
+<ListCard title="Game Modes" imageIcon="/src/assets/element.svg" number="6">
+- Colour (4 suits)
+- NoTrumps
+- AllTrumps
+- Double / Redouble
+- Blind negotiation
+- No face-up card
+
+<LinkButton href="/learn/" variant="text" className="mt-6 mb-8 ml-4">Learn the rules</LinkButton>
+</ListCard>
+
+<ListCard title="Unique Mechanics" imageIcon="/src/assets/content.svg" number="5">
+- No shuffling -- just cut
+- No declarations at all
+- Negotiation-based bidding
+- Match point scoring
+- Sweep = instant win (Colour)
+
+<LinkButton href="/coming-from-belote/" variant="text" className="mt-6 mb-8 ml-4">Coming from Belote?</LinkButton>
+</ListCard>
+
+<ListCard title="Three Languages" imageIcon="/src/assets/layouts.svg" number="3">
+- English terms
+- French (Belote roots)
+- Malagasy (local terms)
+- Full glossary included
+- Community contributions welcome
+- Open an issue to help
+
+<LinkButton href="/vocabulary/" variant="text" className="mt-6 mb-8 ml-4">View vocabulary</LinkButton>
+</ListCard>
+</Grid>
+
+</Section>
+
+import AccordionContainer from "~/components/AccordionContainer.astro";
+import Accordion from "~/components/Accordion.astro";
+
+<Section
+  title="Common questions <span class='light-text'>about Giretra</span>"
+  description="Quick answers to get you started."
+>
+
+<AccordionContainer tabList={
+  [
+    {
+      type: 'basics',
+      title: 'The Basics',
+      subtitle: 'What is Giretra and how do I play?',
+      icon: "rocket"
+    },
+    {
+      type: 'differences',
+      title: 'Belote vs Giretra',
+      subtitle: 'Key differences from French Belote.',
+      icon: "settings"
+    },
+    {
+      type: 'platform',
+      title: 'The Platform',
+      subtitle: 'Playing online and building bots.',
+      icon: "support"
+    }
+  ]
+}>
+
+<Accordion
+  question="How many players do I need?"
+  answer="Four players, split into two teams. Teammates sit across from each other. Play goes clockwise."
+  type="basics"
+/>
+<Accordion
+  question="What cards are used?"
+  answer="A standard 32-card deck: four suits (Spades, Hearts, Diamonds, Clubs), each with A, K, Q, J, 10, 9, 8, 7. No cards below 7."
+  type="basics"
+/>
+<Accordion
+  question="Why is the deck never shuffled?"
+  answer="That's a Giretra tradition. Before each deal, the player to the dealer's left cuts the deck instead. Split it into two halves and put the bottom on top."
+  type="basics"
+/>
+<Accordion
+  question="What's the winning score?"
+  answer="First team to 150 match points wins. If both teams cross 150 in the same deal, the target moves to 250, then 350, and so on."
+  type="basics"
+/>
+
+<Accordion
+  question="Is there a face-up card like in Belote?"
+  answer="No. Giretra has no face-up card. The first player must announce a game mode, and negotiation goes from there. You bid blind based on your hand."
+  type="differences"
+/>
+<Accordion
+  question="Are there declarations (belote-rebelote, sequences)?"
+  answer="No. Giretra has zero declarations. No belote-rebelote, no sequences, no carres. Points come exclusively from tricks and the last trick bonus."
+  type="differences"
+/>
+<Accordion
+  question="What game modes exist?"
+  answer="Six modes ranked low to high: Colour Clubs, Colour Diamonds, Colour Hearts, Colour Spades, NoTrumps, AllTrumps. You can only bid higher than the current bid."
+  type="differences"
+/>
+<Accordion
+  question="What happens with a sweep?"
+  answer="In AllTrumps: 35 match points. In NoTrumps: 90 match points. In Colour: you win the entire match on the spot, regardless of score."
+  type="differences"
+/>
+
+<Accordion
+  question="Can I play online?"
+  answer="Yes! Head to play.giretra.com to play with friends or practice solo."
+  type="platform"
+/>
+<Accordion
+  question="Can I build a bot?"
+  answer="That's the plan. The SDK and bot-building documentation are coming soon. Check the Build Your Bot section for updates."
+  type="platform"
+/>
+<Accordion
+  question="Is Giretra open source?"
+  answer="Fully open source. The game engine, the platform, and this documentation are all on GitHub. Contributions are welcome."
+  type="platform"
+/>
+
+</AccordionContainer>
+
+</Section>

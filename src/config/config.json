@@ -1,0 +1,29 @@
+{
+  "site": {
+    "title": "Giretra",
+    "logo": "/src/assets/logo-light.svg",
+    "logo_darkmode": "/src/assets/logo-dark.svg",
+    "logo_width": "127",
+    "logo_height": "32",
+    "logo_text": "Giretra"
+  },
+
+  "settings": {
+    "search": true,
+    "theme_switcher": true
+  },
+
+  "params": {
+    "footer_contact": {
+      "enable": true,
+      "action": "#"
+    },
+    "copyright": "Giretra &mdash; Open Source. &copy; 2025."
+  },
+
+  "navigation_button": {
+    "enable": true,
+    "label": "Play Now",
+    "link": "https://play.giretra.com"
+  }
+}

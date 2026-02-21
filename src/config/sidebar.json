@@ -1,0 +1,39 @@
+{
+  "main": [
+    {
+      "label": "Learn",
+      "items": [
+        {
+          "label": "[open-book] Rules",
+          "slug": "learn"
+        },
+        {
+          "label": "[seti:plan] Coming from Belote?",
+          "slug": "coming-from-belote"
+        },
+        {
+          "label": "[document] Vocabulary",
+          "slug": "vocabulary"
+        }
+      ]
+    },
+    {
+      "label": "Build Your Bot",
+      "items": [
+        {
+          "label": "[rocket] Getting Started",
+          "slug": "build-your-bot"
+        }
+      ]
+    },
+    {
+      "label": "Contribute",
+      "items": [
+        {
+          "label": "[github] How to Contribute",
+          "slug": "contribute"
+        }
+      ]
+    }
+  ]
+}

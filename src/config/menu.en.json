@@ -1,0 +1,65 @@
+{
+  "main": [
+    {
+      "name": "Home",
+      "url": "/"
+    },
+    {
+      "name": "Learn the Rules",
+      "url": "/learn/"
+    },
+    {
+      "name": "Build Your Bot",
+      "url": "/build-your-bot/"
+    },
+    {
+      "name": "Contribute",
+      "url": "/contribute/"
+    }
+  ],
+  "footer": {
+    "community": {
+      "title": "Community",
+      "links": [
+        {
+          "name": "GitHub",
+          "url": "https://github.com/giretra"
+        },
+        {
+          "name": "Contributing Guide",
+          "url": "/contribute/"
+        }
+      ]
+    },
+    "help_links": {
+      "title": "Learn",
+      "links": [
+        {
+          "name": "Rules",
+          "url": "/learn/"
+        },
+        {
+          "name": "Coming from Belote?",
+          "url": "/coming-from-belote/"
+        },
+        {
+          "name": "Vocabulary",
+          "url": "/vocabulary/"
+        }
+      ]
+    },
+    "company": {
+      "title": "Build",
+      "links": [
+        {
+          "name": "Build Your Bot",
+          "url": "/build-your-bot/"
+        },
+        {
+          "name": "Play Online",
+          "url": "https://play.giretra.com"
+        }
+      ]
+    }
+  }
+}
