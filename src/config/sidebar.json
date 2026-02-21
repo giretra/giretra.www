@@ -2,35 +2,43 @@
   "main": [
     {
       "label": "Learn",
+      "translations": { "fr": "Apprendre", "mg": "Mianatra" },
       "items": [
         {
           "label": "[open-book] Rules",
+          "translations": { "fr": "[open-book] Règles", "mg": "[open-book] Fitsipika" },
           "slug": "learn"
         },
         {
           "label": "[seti:plan] Coming from Belote?",
+          "translations": { "fr": "[seti:plan] Venir de la Belote ?", "mg": "[seti:plan] Avy amin'ny Belote ?" },
           "slug": "coming-from-belote"
         },
         {
           "label": "[document] Vocabulary",
+          "translations": { "fr": "[document] Vocabulaire", "mg": "[document] Voambolana" },
           "slug": "vocabulary"
         }
       ]
     },
     {
       "label": "Build Your Bot",
+      "translations": { "fr": "Créer votre Bot", "mg": "Manao ny Bot-nao" },
       "items": [
         {
           "label": "[rocket] Getting Started",
+          "translations": { "fr": "[rocket] Démarrage", "mg": "[rocket] Fanombohana" },
           "slug": "build-your-bot"
         }
       ]
     },
     {
       "label": "Contribute",
+      "translations": { "fr": "Contribuer", "mg": "Mandray anjara" },
       "items": [
         {
           "label": "[github] How to Contribute",
+          "translations": { "fr": "[github] Comment contribuer", "mg": "[github] Ahoana ny fandray anjara" },
           "slug": "contribute"
         }
       ]

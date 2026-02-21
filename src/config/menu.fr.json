@@ -1,0 +1,65 @@
+{
+  "main": [
+    {
+      "name": "Accueil",
+      "url": "/fr/"
+    },
+    {
+      "name": "Apprendre les règles",
+      "url": "/fr/learn/"
+    },
+    {
+      "name": "Créer votre Bot",
+      "url": "/fr/build-your-bot/"
+    },
+    {
+      "name": "Contribuer",
+      "url": "/fr/contribute/"
+    }
+  ],
+  "footer": {
+    "community": {
+      "title": "Communauté",
+      "links": [
+        {
+          "name": "GitHub",
+          "url": "https://github.com/giretra"
+        },
+        {
+          "name": "Guide de contribution",
+          "url": "/fr/contribute/"
+        }
+      ]
+    },
+    "help_links": {
+      "title": "Apprendre",
+      "links": [
+        {
+          "name": "Règles",
+          "url": "/fr/learn/"
+        },
+        {
+          "name": "Venir de la Belote ?",
+          "url": "/fr/coming-from-belote/"
+        },
+        {
+          "name": "Vocabulaire",
+          "url": "/fr/vocabulary/"
+        }
+      ]
+    },
+    "company": {
+      "title": "Construire",
+      "links": [
+        {
+          "name": "Créer votre Bot",
+          "url": "/fr/build-your-bot/"
+        },
+        {
+          "name": "Jouer en ligne",
+          "url": "https://play.giretra.com"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "page.nextLink": "Pejy manaraka",
+  "page.previousLink": "Pejy teo aloha",
+  "hero.popular": "Malaza",
+  "footer.privacy": "Politikan'ny fiainana manokana",
+  "footer.connectWithUs": "Mifandraisa aminay",
+  "footer.emailPlaceholder": "Ampidiro ny mailakao",
+
+  "search.label": "Fikarohana",
+  "search.shortcutLabel": "(Tsindrio / raha hitady)",
+  "search.cancelLabel": "Akatona",
+  "search.devWarning": "Ny fikarohana dia tsy mbola misy amin'ny mode dev.",
+
+  "themeSelect.accessibleLabel": "Safidio ny loko",
+  "themeSelect.dark": "Maizina",
+  "themeSelect.light": "Mazava",
+  "themeSelect.auto": "Automatika",
+
+  "languageSelect.accessibleLabel": "Safidio ny fiteny",
+
+  "menuButton.accessibleLabel": "Menu",
+
+  "sidebarNav.accessibleLabel": "Voamariky ny sisiny",
+
+  "tableOfContents.onThisPage": "Ato amin'ity pejy ity",
+  "tableOfContents.overview": "Topimaso",
+
+  "i18n.untranslatedContent": "Ity votoaty ity dia tsy mbola voadika amin'ny fiteny Malagasy.",
+
+  "page.editLink": "Ovay ity pejy ity",
+  "page.lastUpdated": "Novaina farany tamin'ny:",
+  "page.draft": "Ity votoaty ity dia drafitra ary tsy ho ao amin'ny famoahana.",
+
+  "404.text": "Tsy hita ny pejy. Jereo ny URL na mampiasà ny fikarohana.",
+
+  "aside.tip": "Torohevitra",
+  "aside.note": "Fanamarihana",
+  "aside.caution": "Tandremo",
+  "aside.danger": "Loza",
+
+  "expressiveCode.terminalWindowFallbackTitle": "Terminal",
+  "expressiveCode.copyButtonTooltip": "Adikao",
+  "expressiveCode.copyButtonCopied": "Voaadika!",
+
+  "pageSidebar.tabLabel": "Tabs",
+  "starlight.pageSidebar.tabLabel": "Tabs"
+}

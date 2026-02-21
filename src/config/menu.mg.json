@@ -1,0 +1,65 @@
+{
+  "main": [
+    {
+      "name": "Fandraisana",
+      "url": "/mg/"
+    },
+    {
+      "name": "Mianatra ny fitsipika",
+      "url": "/mg/learn/"
+    },
+    {
+      "name": "Manao ny Bot-nao",
+      "url": "/mg/build-your-bot/"
+    },
+    {
+      "name": "Mandray anjara",
+      "url": "/mg/contribute/"
+    }
+  ],
+  "footer": {
+    "community": {
+      "title": "Fiaraha-monina",
+      "links": [
+        {
+          "name": "GitHub",
+          "url": "https://github.com/giretra"
+        },
+        {
+          "name": "Torolàlana fandray anjara",
+          "url": "/mg/contribute/"
+        }
+      ]
+    },
+    "help_links": {
+      "title": "Mianatra",
+      "links": [
+        {
+          "name": "Fitsipika",
+          "url": "/mg/learn/"
+        },
+        {
+          "name": "Avy amin'ny Belote ?",
+          "url": "/mg/coming-from-belote/"
+        },
+        {
+          "name": "Voambolana",
+          "url": "/mg/vocabulary/"
+        }
+      ]
+    },
+    "company": {
+      "title": "Mamorona",
+      "links": [
+        {
+          "name": "Manao ny Bot-nao",
+          "url": "/mg/build-your-bot/"
+        },
+        {
+          "name": "Milalao an-tserasera",
+          "url": "https://play.giretra.com"
+        }
+      ]
+    }
+  }
+}

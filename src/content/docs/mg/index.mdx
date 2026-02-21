@@ -1,0 +1,179 @@
+---
+title: Giretra
+description: Lalaon-katro open source — milalao, mianatra, mamorona, mandray anjara.
+template: splash
+hero:
+  tagline: "Ny sehatra sy SDK Belote Gasy anao: milalao miaraka amin'ny namanao na mianatra irery, mamorona ny bot-nao, ary mandray anjara amin'ny sehatra open source velona."
+  actions:
+    - text: Milalao
+      link: https://play.giretra.com
+      icon: external
+    - text: Mianatra ny fitsipika
+      link: /mg/learn/
+      icon: open-book
+      variant: secondary
+    - text: Manao ny Bot-nao
+      link: /mg/build-your-bot/
+      icon: rocket
+      variant: secondary
+    - text: Mandray anjara
+      link: /mg/contribute/
+      icon: github
+      variant: secondary
+---
+
+import Section from "~/components/Section.astro";
+import Card from "~/components/user-components/NewCard.astro";
+import Grid from "~/components/user-components/Grid.astro";
+import LinkButton from "~/components/LinkButton.astro";
+import ListCard from "~/components/user-components/ListCard.astro";
+
+<Section title="Izay rehetra ilainao <span class='light-text'>hanombohana</span>" description="Ny Giretra dia lalaon-katro avy eto Madagasikara, teraka avy amin'ny fianakavian'ny Belote. Mpilalao efatra, ekipa roa, karatra 32.">
+
+<Grid columns={4}>
+  <Card title="Mianatra ny fitsipika" icon="open-book" iconColor="#7BE1A4">
+    Hatramin'ny fanomanana ka hatramin'ny fanisàna isa, izay rehetra ilainao hanombohana ny Giretra.
+  </Card>
+  <Card title="Manao ny bot-nao" icon="rocket" iconColor="#FFD97B">
+    Ataovy ao anaty bot ny fahalalanao ary avelao izy hifaninana ho anao ao amin'ny sehatra.
+  </Card>
+  <Card title="Open source" icon="github" iconColor="#979BFF">
+    Ny Giretra dia open source tanteraka. Vakio ny code, forko, amboary.
+  </Card>
+  <Card title="Milalao an-tserasera" icon="external" iconColor="#FF8585">
+    Midira lalao izao ao amin'ny play.giretra.com miaraka amin'ny namana na irery.
+  </Card>
+</Grid>
+
+</Section>
+
+<Section title="Izay mahatonga ny Giretra <span class='light-text'>hafa</span>" description="Raha efa nilalao Belote ianao, efa 80 % ianao. Ireto ny 20 % manan-danja.">
+
+<Grid columns={3}>
+<ListCard title="Fomba filalaovana" imageIcon="/src/assets/element.svg" number="6">
+- Couleur (enseigne 4)
+- Sans Atout
+- Tout Atout
+- Contré / Surcontré
+- Fifampiraharahana jamba
+- Tsy misy karatra misokatra
+
+<LinkButton href="/mg/learn/" variant="text" className="mt-6 mb-8 ml-4">Mianatra ny fitsipika</LinkButton>
+</ListCard>
+
+<ListCard title="Mekanika manokana" imageIcon="/src/assets/content.svg" number="5">
+- Tsy afangaro — tapaho fotsiny
+- Tsy misy déclaration
+- Fifanarahana amin'ny enchère
+- Isa amin'ny points de partie
+- Capot = fandresena eo noho eo (Couleur)
+
+<LinkButton href="/mg/coming-from-belote/" variant="text" className="mt-6 mb-8 ml-4">Avy amin'ny Belote ?</LinkButton>
+</ListCard>
+
+<ListCard title="Fiteny telo" imageIcon="/src/assets/layouts.svg" number="3">
+- Teny anglisy
+- Frantsay (foto-piavian'ny Belote)
+- Malagasy (teny eto an-toerana)
+- Glossaire feno ao anatiny
+- Fandraisana anjaran'ny fiaraha-monina
+- Sokafy issue hanampy
+
+<LinkButton href="/mg/vocabulary/" variant="text" className="mt-6 mb-8 ml-4">Jereo ny voambolana</LinkButton>
+</ListCard>
+</Grid>
+
+</Section>
+
+import AccordionContainer from "~/components/AccordionContainer.astro";
+import Accordion from "~/components/Accordion.astro";
+
+<Section
+  title="Fanontaniana mahazatra <span class='light-text'>momba ny Giretra</span>"
+  description="Valiny haingana hanombohana."
+>
+
+<AccordionContainer tabList={
+  [
+    {
+      type: 'basics',
+      title: 'Ny fototra',
+      subtitle: 'Inona ny Giretra ary ahoana ny filalaovana azy ?',
+      icon: "rocket"
+    },
+    {
+      type: 'differences',
+      title: 'Belote vs Giretra',
+      subtitle: 'Ny fahasamihafana lehibe amin\'ny Belote frantsay.',
+      icon: "settings"
+    },
+    {
+      type: 'platform',
+      title: 'Ny sehatra',
+      subtitle: 'Milalao an-tserasera sy mamorona bot.',
+      icon: "support"
+    }
+  ]
+}>
+
+<Accordion
+  question="Mpilalao firy no ilaina ?"
+  answer="Mpilalao efatra, mizara ho ekipa roa. Ny mpiara-milalao mipetraka mifanatrika. Ny lalao mandeha araka ny famakiam-paradisa."
+  type="basics"
+/>
+<Accordion
+  question="Karatra inona no ampiasaina ?"
+  answer="Karatra 32 mahazatra: enseigne efatra (Pique, Coeur, Carreau, Trèfle), tsirairay misy A, R, D, V, 10, 9, 8, 7. Tsy misy karatra latsaky ny 7."
+  type="basics"
+/>
+<Accordion
+  question="Nahoana ny karatra no tsy afangaro ?"
+  answer="Fomba nentin-drazana amin'ny Giretra izany. Alohan'ny donne tsirairay, ny mpilalao eo ankavian'ny mpizara no manapaka ny karatra. Zaraina roa ary ny eo ambany apetraka eo ambony."
+  type="basics"
+/>
+<Accordion
+  question="Firy ny isa fandresena ?"
+  answer="Ny ekipa voalohany mahatratra 150 points de partie no mandresy. Raha samy mihoatra ny 150 ny ekipa roa amin'ny donne iray, miakatra 250 ny tanjona, avy eo 350, sns."
+  type="basics"
+/>
+
+<Accordion
+  question="Misy karatra misokatra ve tahaka ny Belote ?"
+  answer="Tsia. Ny Giretra tsy misy karatra misokatra. Ny mpilalao voalohany dia tsy maintsy miantso fomba filalaovana, ary manomboka eo ny fifampiraharahana. Miantso jamba araka ny karatra eny an-tanana."
+  type="differences"
+/>
+<Accordion
+  question="Misy déclaration ve (belote-rebelote, séquences) ?"
+  answer="Tsia. Ny Giretra tsy misy déclaration. Tsy misy belote-rebelote, tsy misy séquences, tsy misy carrés. Ny isa dia avy amin'ny pli sy ny bonus farany ihany."
+  type="differences"
+/>
+<Accordion
+  question="Fomba filalaovana inona avy no misy ?"
+  answer="Fomba enina milahatra ambany ka ambony: Couleur Trèfle, Couleur Carreau, Couleur Coeur, Couleur Pique, Sans Atout, Tout Atout. Tsy afaka miantso ambany noho ny enchère ankehitriny ianao."
+  type="differences"
+/>
+<Accordion
+  question="Inona no mitranga rehefa capot ?"
+  answer="Amin'ny Tout Atout: 35 points de partie. Amin'ny Sans Atout: 90 points de partie. Amin'ny Couleur: mandresy ny lalao manontolo eo noho eo ianao, na inona na inona ny isa."
+  type="differences"
+/>
+
+<Accordion
+  question="Afaka milalao an-tserasera ve ?"
+  answer="Eny! Mandehana any amin'ny play.giretra.com hilalao miaraka amin'ny namana na hianatra irery."
+  type="platform"
+/>
+<Accordion
+  question="Afaka mamorona bot ve ?"
+  answer="Izay no fikasana. Ny SDK sy ny tahirin-kevitra momba ny famoronana bot dia ho avy tsy ho ela. Jereo ny fizarana Manao ny Bot-nao ho an'ny vaovao."
+  type="platform"
+/>
+<Accordion
+  question="Open source ve ny Giretra ?"
+  answer="Open source tanteraka. Ny milina lalao, ny sehatra ary ity tahirin-kevitra ity dia samy ao amin'ny GitHub. Ny fandraisana anjara dia tena tsara."
+  type="platform"
+/>
+
+</AccordionContainer>
+
+</Section>

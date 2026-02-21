@@ -62,12 +62,12 @@ const currentLocal = Astro.currentLocale || "en";
       {
         config?.params?.footer_contact?.enable && (
           <div>
-            <h4>Connect With Us</h4>
+            <h4>{Astro.locals.t("footer.connectWithUs")}</h4>
             <form
               action={config?.params?.footer_contact?.action}
               class="mail-form"
             >
-              <input type="email" placeholder="Enter your email" required />
+              <input type="email" placeholder={Astro.locals.t("footer.emailPlaceholder")} required />
               <button type="submit" aria-label="Submit email">
                 <svg
                   width="24"
@@ -111,7 +111,7 @@ const currentLocal = Astro.currentLocale || "en";
     </div>
     <div class="bottom-footer">
       <p set:html={markdownify(config?.params?.copyright)} />
-      <a href={currentLocal + "/privacy-policy"}
+      <a href={(currentLocal === "en" ? "" : "/" + currentLocal) + "/privacy-policy"}
         >{Astro.locals.t("footer.privacy", "Privacy Policy")}</a
       >
     </div>

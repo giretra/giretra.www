@@ -1,3 +1,5 @@
 {
-  "root": { "label": "English", "lang": "en" }
+  "root": { "label": "English", "lang": "en" },
+  "fr": { "label": "Français", "lang": "fr" },
+  "mg": { "label": "Malagasy", "lang": "mg" }
 }
