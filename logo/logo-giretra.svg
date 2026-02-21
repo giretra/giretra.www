@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="96 208 430 82" width="430" height="82">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@800&amp;display=swap');</style>
+  </defs>
+  
+  <!-- Minimalist card icon - thicker strokes -->
+  <g transform="translate(108, 218)" fill="none" stroke="#E63946" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Card shape -->
+    <rect x="0" y="0" width="52" height="72" rx="6" ry="6"/>
+    
+    <!-- J top-left -->
+    <text x="10" y="22" font-family="'Urbanist', sans-serif" font-size="20" font-weight="800" fill="#E63946" stroke="none">J</text>
+    
+    <!-- Club symbol center -->
+    <g transform="translate(26, 44)" fill="#E63946" stroke="none">
+      <circle cx="0" cy="-5.5" r="5"/>
+      <circle cx="-4.5" cy="1.5" r="5"/>
+      <circle cx="4.5" cy="1.5" r="5"/>
+      <rect x="-1.5" y="4" width="3" height="7" rx="1"/>
+    </g>
+  </g>
+  
+  <!-- Main text -->
+  <text x="310" y="272" text-anchor="middle" font-family="'Urbanist', sans-serif" font-size="76" font-weight="800" fill="#fff" letter-spacing="4">giretra</text>
+</svg>
