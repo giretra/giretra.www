@@ -9,7 +9,7 @@ Giretra is a trick-taking card game from Madagascar, born from the Belote family
 
 You need 4 players split into 2 teams. Teammates sit across from each other, not side by side. Play goes clockwise.
 
-The deck has 32 cards: the four standard suits (Spades, Hearts, Diamonds, Clubs), each with A, K, Q, J, 10, 9, 8, 7. Yep, no cards below 7.
+The deck has 32 cards: the four standard suits (♠ Spades, ♥ Hearts, ♦ Diamonds, ♣ Clubs), each with A, K, Q, J, 10, 9, 8, 7. Yep, no cards below 7.
 
 One thing that makes Giretra unique: **the deck is never shuffled** during a match. Before each deal, the player to the dealer's left cuts the deck instead. You split it into two halves (at least 6 cards from either end) and put the bottom half on top. That's it.
 
@@ -28,7 +28,7 @@ The dealer rotates clockwise after every deal. Let's break down each phase.
 
 Before you play, your team has to agree on a game mode through negotiation. There are three types:
 
-**Colour mode** -- one suit becomes trump. There are four variants, ranked low to high: Clubs, Diamonds, Hearts, Spades.
+**Colour mode** -- one suit becomes trump. There are four variants, ranked low to high: ♣ Clubs, ♦ Diamonds, ♥ Hearts, ♠ Spades.
 
 **NoTrumps** -- no trump suit. Every suit plays by the same rules.
 
@@ -36,7 +36,7 @@ Before you play, your team has to agree on a game mode through negotiation. Ther
 
 The full hierarchy from lowest to highest:
 
-Clubs < Diamonds < Hearts < Spades < NoTrumps < AllTrumps
+♣ < ♦ < ♥ < ♠ < NoTrumps < AllTrumps
 
 This ranking matters because during negotiation, you can only bid *higher* than the current bid.
 
@@ -129,37 +129,37 @@ Negotiation ends after **3 consecutive Accepts** following any bid or Double.
 ### Key restrictions
 
 - You can only bid *higher* than the current bid (follow the hierarchy)
-- Each team gets only **one** Colour bid per deal. If your teammate already bid Colour Diamonds, you can't bid Colour Spades. The other team still can.
+- Each team gets only **one** Colour bid per deal. If your teammate already bid Colour ♦, you can't bid Colour ♠. The other team still can.
 - Once you Accept, you're done announcing for this deal
 
 ### The Double game
 
 Doubling is where things get spicy. When you Double an opponent's bid, you're saying "go ahead, I dare you." The match points get multiplied by 2.
 
-A twist: in **NoTrumps** and **Colour Clubs**, if an opponent Accepts the bid, it automatically counts as a Double. These modes are considered so strong that accepting the other team's bid is already a challenge.
+A twist: in **NoTrumps** and **Colour ♣**, if an opponent Accepts the bid, it automatically counts as a Double. These modes are considered so strong that accepting the other team's bid is already a challenge.
 
-Redoubling (x4 multiplier) is the comeback to a Double, but it's only available in AllTrumps and the higher Colour modes (Diamonds, Hearts, Spades). You can't Redouble in NoTrumps or Clubs since those are already implicitly Doubled.
+Redoubling (x4 multiplier) is the comeback to a Double, but it's only available in AllTrumps and the higher Colour modes (♦, ♥, ♠). You can't Redouble in NoTrumps or ♣ since those are already implicitly Doubled.
 
 If multiple bids get Doubled in the same negotiation, the **first announced mode** that was Doubled is the one you play.
 
 ### A quick example
 
-1. Bottom: "Colour Hearts"
+1. Bottom: "Colour ♥"
 2. Left: Accept
 3. Top: Accept
 4. Right: Accept
 
-Done. Colour Hearts it is, with Bottom's team as the announcers. Simple.
+Done. Colour ♥ it is, with Bottom's team as the announcers. Simple.
 
 A messier one:
 
-1. Bottom: "Colour Clubs"
-2. Left: "Colour Spades" (outbids)
+1. Bottom: "Colour ♣"
+2. Left: "Colour ♠" (outbids)
 3. Top: Accept
 4. Right: Accept
 5. Bottom: Accept
 
-Colour Spades wins. Left's team announces.
+Colour ♠ wins. Left's team announces.
 
 ## Playing Tricks
 
