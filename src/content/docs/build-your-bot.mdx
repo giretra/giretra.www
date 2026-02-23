@@ -1,0 +1,419 @@
+---
+title: Build Your Bot
+description: Pour your knowledge into a bot and let it compete for you.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+We provide ready-to-go templates for **Python**, **TypeScript**, **C#**, **Go**, and **Java**. If you can write a function in any of these, you can build a bot. No need to know how HTTP works, how JSON is parsed, or how game engines communicate. Pick a template, duplicate the folder, edit one file. That's the whole thing.
+
+## Prerequisites
+
+- **.NET 10**, required to run `giretra-manage`, the CLI tool you'll use to test your bot
+- **Your language's runtime**: Node 20+ for TypeScript, Python 3 for Python, Go 1.23+ for Go, Java 17+ for Java
+
+That's it. No databases, no message queues, no container orchestration.
+
+## Step 1: Clone the repository
+
+```bash
+git clone https://github.com/giretra/giretra.git
+cd giretra
+```
+
+Everything happens inside this repo: templates, testing tools, and the bot folder where your bot will live.
+
+## Step 2: Copy a template
+
+Copy one of the template folders in `external-bots/` and rename it:
+
+<Tabs syncKey="lang">
+  <TabItem label="Python">
+    ```bash
+    cp -r external-bots/random-python-bot external-bots/my-bot
+    ```
+  </TabItem>
+  <TabItem label="TypeScript">
+    ```bash
+    cp -r external-bots/random-node-bot external-bots/my-bot
+    ```
+  </TabItem>
+  <TabItem label="C#">
+    ```bash
+    cp -r external-bots/random-dotnet-bot external-bots/my-bot
+    ```
+  </TabItem>
+  <TabItem label="Go">
+    ```bash
+    cp -r external-bots/random-go-bot external-bots/my-bot
+    ```
+  </TabItem>
+  <TabItem label="Java">
+    ```bash
+    cp -r external-bots/random-java-bot external-bots/my-bot
+    ```
+  </TabItem>
+</Tabs>
+
+Each template folder contains:
+
+| File | Purpose | Edit? |
+|------|---------|-------|
+| `bot.meta.json` | Bot identity and launch configuration | Yes |
+| Bot file (`bot.py`, `bot.ts`, `Bot.cs`, `bot.go`, `Bot.java`) | Your game logic | Yes |
+| Server file | HTTP boilerplate | No |
+| Type definitions | Data structures for requests and responses | No |
+
+## Step 3: Configure `bot.meta.json`
+
+Open `bot.meta.json` and update the identity fields:
+
+```json
+{
+  "name": "my-bot",
+  "displayName": "My Awesome Bot",
+  "pun": "I never bluff... except when I do",
+  "author": "Your Name",
+  "authorGithub": "your-github-username"
+}
+```
+
+Field reference:
+
+| Field | Description |
+|-------|-------------|
+| `name` | Internal identifier. Must be unique, lowercase, no spaces. This is also your folder name. |
+| `displayName` | What shows up in leaderboards and match results. |
+| `pun` | A one-liner that shows up next to your bot's name. Optional but encouraged. |
+| `author` | Your name. |
+| `authorGithub` | Your GitHub username. |
+| `init` | How to install dependencies or compile. Runs once before your bot starts. |
+| `launch` | How to start your bot's server. The engine sets a `PORT` environment variable. |
+
+Leave `init` and `launch` alone unless you need to change how your bot builds or starts. The templates have these set up correctly.
+
+## Step 4: Implement your bot logic
+
+Your bot makes exactly **3 types of decisions**:
+
+1. **Choose a cut position.** Before each deal, someone cuts the deck. Pick a position between 6 and 26.
+2. **Choose a negotiation action.** The bidding phase. The engine gives you a list of valid actions (announce a mode, accept, double, redouble). Pick one.
+3. **Choose a card to play.** The heart of your strategy. The engine gives you a list of valid cards. Pick one.
+
+Here's a complete bot in each language. This is the **only file you edit**:
+
+<Tabs syncKey="lang">
+  <TabItem label="Python">
+    **`bot.py`**
+    ```python
+    import random
+    from bot_types import *
+
+    class Bot:
+        def __init__(self, match_id: str):
+            self.match_id = match_id
+
+        def choose_cut(self, ctx: ChooseCutContext) -> CutResult:
+            position = random.randint(6, 26)
+            return CutResult(position=position, from_top=True)
+
+        def choose_negotiation_action(
+            self, ctx: ChooseNegotiationActionContext
+        ) -> NegotiationActionChoice:
+            # ctx.valid_actions has everything you're allowed to do
+            return ctx.valid_actions[0]
+
+        def choose_card(self, ctx: ChooseCardContext) -> Card:
+            # ctx.valid_plays has every legal card you can play
+            return random.choice(ctx.valid_plays)
+    ```
+  </TabItem>
+  <TabItem label="TypeScript">
+    **`bot.ts`**
+    ```typescript
+    import type {
+      ChooseCutContext, ChooseNegotiationActionContext,
+      ChooseCardContext, CutResult, NegotiationActionChoice, Card
+    } from './types';
+
+    export class Bot {
+      constructor(public readonly matchId: string) {}
+
+      chooseCut(ctx: ChooseCutContext): CutResult {
+        const position = Math.floor(Math.random() * 21) + 6;
+        return { position, fromTop: true };
+      }
+
+      chooseNegotiationAction(ctx: ChooseNegotiationActionContext): NegotiationActionChoice {
+        // ctx.validActions has everything you're allowed to do
+        return ctx.validActions[0];
+      }
+
+      chooseCard(ctx: ChooseCardContext): Card {
+        // ctx.validPlays has every legal card you can play
+        return ctx.validPlays[Math.floor(Math.random() * ctx.validPlays.length)];
+      }
+    }
+    ```
+  </TabItem>
+  <TabItem label="C#">
+    **`Bot.cs`**
+    ```csharp
+    namespace RandomDotnetBot;
+
+    public class Bot
+    {
+        private readonly Random Rng = new();
+        public string MatchId { get; }
+
+        public Bot(string matchId) => MatchId = matchId;
+
+        public CutResult ChooseCut(ChooseCutContext ctx)
+        {
+            return new CutResult { Position = Rng.Next(6, 27), FromTop = true };
+        }
+
+        public NegotiationActionChoice ChooseNegotiationAction(
+            ChooseNegotiationActionContext ctx)
+        {
+            // ctx.ValidActions has everything you're allowed to do
+            return ctx.ValidActions[0];
+        }
+
+        public Card ChooseCard(ChooseCardContext ctx)
+        {
+            // ctx.ValidPlays has every legal card you can play
+            return ctx.ValidPlays[Rng.Next(ctx.ValidPlays.Count)];
+        }
+    }
+    ```
+  </TabItem>
+  <TabItem label="Go">
+    **`bot.go`**
+    ```go
+    package main
+
+    import "math/rand/v2"
+
+    type Bot struct {
+        MatchID string
+    }
+
+    func NewBot(matchID string) *Bot {
+        return &Bot{MatchID: matchID}
+    }
+
+    func (b *Bot) ChooseCut(ctx ChooseCutContext) CutResult {
+        return CutResult{Position: rand.IntN(21) + 6, FromTop: true}
+    }
+
+    func (b *Bot) ChooseNegotiationAction(
+        ctx ChooseNegotiationActionContext,
+    ) NegotiationActionChoice {
+        // ctx.ValidActions has everything you're allowed to do
+        return ctx.ValidActions[0]
+    }
+
+    func (b *Bot) ChooseCard(ctx ChooseCardContext) Card {
+        // ctx.ValidPlays has every legal card you can play
+        return ctx.ValidPlays[rand.IntN(len(ctx.ValidPlays))]
+    }
+    ```
+  </TabItem>
+  <TabItem label="Java">
+    **`Bot.java`**
+    ```java
+    package randomjavabot;
+
+    import java.util.concurrent.ThreadLocalRandom;
+    import randomjavabot.BotTypes.*;
+
+    public class Bot {
+        private final String matchId;
+
+        public Bot(String matchId) {
+            this.matchId = matchId;
+        }
+
+        public CutResult chooseCut(ChooseCutContext ctx) {
+            int position = ThreadLocalRandom.current().nextInt(6, 27);
+            return new CutResult(position, true);
+        }
+
+        public NegotiationActionChoice chooseNegotiationAction(
+                ChooseNegotiationActionContext ctx) {
+            // ctx.validActions() has everything you're allowed to do
+            return ctx.validActions().get(0);
+        }
+
+        public Card chooseCard(ChooseCardContext ctx) {
+            // ctx.validPlays() has every legal card you can play
+            var plays = ctx.validPlays();
+            return plays.get(ThreadLocalRandom.current().nextInt(plays.size()));
+        }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+That's it. Three methods. The engine tells you what's legal through `validActions` and `validPlays`, so you **can't accidentally make an illegal move**. You just pick from the menu. Start dumb, iterate.
+
+The request contexts also include your hand, the current trick, scores, and negotiation history, everything you need to build a real strategy.
+
+## Step 5: Test your bot
+
+All commands below assume you're at the root of your [Giretra](https://github.com/giretra/giretra) clone. Use `./giretra-manage.sh` on Linux/macOS or `giretra-manage.cmd` on Windows.
+
+### Validate
+
+The first command you should run. It plays your bot through 100 matches against `RandomPlayer` and checks everything works:
+
+```bash
+./giretra-manage.sh validate my-bot
+```
+
+You get a full report with:
+
+- **Rule violations** and crash counts (your target: zero)
+- **Response times** per decision type (min, avg, P50, P95, P99, max)
+- **Game mode coverage** (whether your bot was tested across all six game modes)
+- **Performance trend** (response time stability across the run)
+
+You can tweak the run with flags like `-n 500` for more matches, `-o CalculatingPlayer` for a tougher opponent, `-d` for a determinism check, or `-v` for verbose violation details.
+
+### Benchmark
+
+Once your bot validates clean, pit it against the built-in opponents:
+
+```bash
+./giretra-manage.sh benchmark my-bot RandomPlayer
+./giretra-manage.sh benchmark my-bot CalculatingPlayer
+./giretra-manage.sh benchmark my-bot DeterministicPlayer
+```
+
+| Bot | Difficulty | Strategy |
+|-----|-----------|----------|
+| `RandomPlayer` | Easy | Picks randomly. If you can't beat it, something's wrong. |
+| `CalculatingPlayer` | Medium | Tracks cards and reads partner signals. |
+| `DeterministicPlayer` | Hard | Card counting, void inference, positional play. The current boss. |
+
+The benchmark runs 1000 matches by default and gives you win rates with 95% confidence intervals, ELO ratings, and statistical significance. Use `-n` to change the match count.
+
+### Swiss tournament
+
+See where your bot ranks against all available bots:
+
+```bash
+./giretra-manage.sh swiss
+```
+
+This discovers all bots (built-in and external) and runs a full Swiss-system tournament with a final leaderboard, win/loss records, and ELO ratings. You can also pass specific bot names to limit the participants.
+
+## Observation events (optional)
+
+If you want your bot to track what other players are doing, subscribe to notifications by adding event types to `bot.meta.json`:
+
+```json
+"notifications": ["card-played", "trick-completed", "deal-ended"]
+```
+
+Then implement the corresponding handler methods:
+
+<Tabs syncKey="lang">
+  <TabItem label="Python">
+    ```python
+    def on_card_played(self, ctx: CardPlayedContext) -> None:
+        # Track which cards have been played
+        pass
+
+    def on_trick_completed(self, ctx: TrickCompletedContext) -> None:
+        # Track tricks won by each team
+        pass
+
+    def on_deal_ended(self, ctx: DealEndedContext) -> None:
+        # Review deal results
+        pass
+    ```
+  </TabItem>
+  <TabItem label="TypeScript">
+    ```typescript
+    onCardPlayed(ctx: CardPlayedContext): void {
+      // Track which cards have been played
+    }
+
+    onTrickCompleted(ctx: TrickCompletedContext): void {
+      // Track tricks won by each team
+    }
+
+    onDealEnded(ctx: DealEndedContext): void {
+      // Review deal results
+    }
+    ```
+  </TabItem>
+  <TabItem label="C#">
+    ```csharp
+    public virtual void OnCardPlayed(CardPlayedContext ctx)
+    {
+        // Track which cards have been played
+    }
+
+    public virtual void OnTrickCompleted(TrickCompletedContext ctx)
+    {
+        // Track tricks won by each team
+    }
+
+    public virtual void OnDealEnded(DealEndedContext ctx)
+    {
+        // Review deal results
+    }
+    ```
+  </TabItem>
+  <TabItem label="Go">
+    ```go
+    func (b *Bot) OnCardPlayed(ctx CardPlayedContext) {
+        // Track which cards have been played
+    }
+
+    func (b *Bot) OnTrickCompleted(ctx TrickCompletedContext) {
+        // Track tricks won by each team
+    }
+
+    func (b *Bot) OnDealEnded(ctx DealEndedContext) {
+        // Review deal results
+    }
+    ```
+  </TabItem>
+  <TabItem label="Java">
+    ```java
+    public void onCardPlayed(CardPlayedContext ctx) {
+        // Track which cards have been played
+    }
+
+    public void onTrickCompleted(TrickCompletedContext ctx) {
+        // Track tricks won by each team
+    }
+
+    public void onDealEnded(DealEndedContext ctx) {
+        // Review deal results
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+Available events: `deal-started`, `card-played`, `trick-completed`, `deal-ended`, `match-ended`.
+
+These are great for building memory: tracking which cards have been played, detecting voids, counting points. But they're completely optional. A stateless bot works just fine as a starting point.
+
+## Rules
+
+One rule: **no calling external resources during play**. No API calls to a cloud AI, no phoning home to a remote server, no downloading strategy files mid-game.
+
+Your bot runs locally, makes decisions locally. You can use whatever local libraries and dependencies you want: math libraries, data structures, even a local ML model. Just keep it self-contained.
+
+## Next steps
+
+Start with the dumbest bot that works. Validate it. Then make it smarter, one decision at a time. Beat `RandomPlayer`, then go after `CalculatingPlayer`, then try to dethrone `DeterministicPlayer`.
+
+When you're confident in your bot, open a pull request on [giretra/giretra](https://github.com/giretra/giretra). If it passes validation, your bot will be playable on [play.giretra.com](https://play.giretra.com).
+
+Want to understand the protocol under the hood or build a bot in a language without a template? Check out [Build from Scratch](/build-your-bot-custom/).

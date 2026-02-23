@@ -29,6 +29,11 @@
           "label": "[rocket] Getting Started",
           "translations": { "fr": "[rocket] Démarrage", "mg": "[rocket] Fanombohana" },
           "slug": "build-your-bot"
+        },
+        {
+          "label": "[puzzle] Build from Scratch",
+          "translations": { "fr": "[puzzle] Construire de zéro", "mg": "[puzzle] Manao avy amin'ny scratch" },
+          "slug": "build-your-bot-custom"
         }
       ]
     },
