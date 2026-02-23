@@ -1,0 +1,14 @@
+services:
+  www:
+    build: .
+    container_name: giretra-www
+    hostname: giretra-www
+    restart: unless-stopped
+    expose:
+      - "80"
+    networks:
+      - tetezana
+
+networks:
+  tetezana:
+    external: true

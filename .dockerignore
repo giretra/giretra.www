@@ -1,0 +1,9 @@
+node_modules
+dist
+.git
+.astro
+.vscode
+logo
+*.md
+.env
+.env.*
