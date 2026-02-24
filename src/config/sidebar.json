@@ -31,6 +31,11 @@
           "slug": "build-your-bot"
         },
         {
+          "label": "[send] Publish Your Bot",
+          "translations": { "fr": "[send] Publier votre Bot", "mg": "[send] Mamoaka ny Bot-nao" },
+          "slug": "publish-your-bot"
+        },
+        {
           "label": "[puzzle] Build from Scratch",
           "translations": { "fr": "[puzzle] Construire de zéro", "mg": "[puzzle] Manao avy amin'ny scratch" },
           "slug": "build-your-bot-custom"
