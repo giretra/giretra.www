@@ -23,7 +23,7 @@
 
   "navigation_button": {
     "enable": true,
-    "label": "Play Now",
+    "label": "Play Online",
     "link": "https://play.giretra.com",
     "translations": { "fr": "Jouer", "mg": "Milalao" }
   }
