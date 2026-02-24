@@ -22,22 +22,23 @@ const is404 = Astro.locals.starlightRoute?.id === "404";
   class="hero flex flex-col items-center mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-35"
 >
   {title && <h1 set:html={title} class="mb-8 text-center rounded-2xl" />}
-  {tagline && <p set:html={tagline} class="text-xl text-center" />}
+  {tagline && <p set:html={tagline} class="text-2xl text-center" />}
 
   {
     !is404 && (
       <div class="mt-12 max-w-4xl">
-        <div class="search-container rounded-2xl p-2 mb-6">
-          <div class="search-bar">
-            <Search />
-          </div>
-        </div>
-
-        <div class="flex justify-center items-center flex-wrap gap-4">
-          <p class="text-base font-normal">
-            {Astro.locals.t("hero.popular", "Popular")}:
-          </p>
+<div class="flex justify-center items-center flex-wrap gap-4">
           <div class="flex gap-4 badges px-3 py-2.5 rounded-xl flex-wrap justify-center">
+            <div class="play-badge rounded-lg px-2 py-1.5 group transition">
+              <a
+                class="cursor-pointer no-underline text-white transition-colors"
+                href="https://play.giretra.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ▶ Play
+              </a>
+            </div>
             {sidebar.map((item: any) => {
               const href = getFirstHref(item);
               return (
@@ -61,8 +62,8 @@ const is404 = Astro.locals.starlightRoute?.id === "404";
 <style>
   @layer starlight.core {
     h1 {
-      font-size: 7rem !important;
-      line-height: 6.5rem !important;
+      font-size: 5rem !important;
+      line-height: 4.5rem !important;
       letter-spacing: -4px;
       color: var(--sl-color-white);
     }
@@ -86,6 +87,14 @@ const is404 = Astro.locals.starlightRoute?.id === "404";
     }
     .badge:hover {
       background: color-mix(in srgb, var(--sl-color-white) 15%, transparent);
+    }
+    .play-badge {
+      background: var(--sl-color-accent);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .play-badge:hover {
+      filter: brightness(1.15);
     }
 
     @media (max-width: 940px) {
