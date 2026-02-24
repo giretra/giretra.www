@@ -3,11 +3,11 @@ title: Créer de zéro
 description: Le protocole HTTP brut pour créer un bot Giretra dans n'importe quel langage.
 ---
 
-Les templates gèrent le HTTP pour vous, mais si vous voulez faire le vôtre en Rust, Haskell, ou autre, voici comment ça marche sous le capot. Du HTTP simple, du JSON simple. Si votre langage peut servir du HTTP et parser du JSON, vous pouvez créer un bot.
+Les templates gèrent le HTTP à votre place, mais si vous voulez tout construire vous-même en Rust, Haskell ou autre, voici comment ça fonctionne sous le capot. Du HTTP basique, du JSON basique. Si votre langage sait servir du HTTP et parser du JSON, vous pouvez créer un bot.
 
 ## Architecture
 
-Le moteur contrôle tout. Votre bot ne fait que répondre.
+Le moteur contrôle tout. Votre bot se contente de répondre.
 
 ```
 ┌─────────────────────┐                     ┌─────────────────────┐
@@ -21,23 +21,23 @@ Le moteur contrôle tout. Votre bot ne fait que répondre.
 │                     │                      │                     │
 └─────────────────────┘                      └─────────────────────┘
 
-         Le moteur démarre votre bot, envoie des requêtes HTTP,
+         Le moteur démarre votre bot, lui envoie des requêtes HTTP,
          et votre bot répond en JSON. C'est tout le protocole.
 ```
 
-Votre bot est un serveur HTTP. Le moteur le démarre, lui envoie des requêtes et lit les réponses. Vous n'initiez aucune communication. Vous répondez quand on vous le demande.
+Votre bot est un serveur HTTP. Le moteur le démarre, lui envoie des requêtes et lit les réponses. Vous n'initiez jamais la communication. Vous répondez quand on vous le demande, point.
 
 ## L'API HTTP
 
-Tous les endpoints se trouvent sous `/api/sessions/{sessionId}/`. Le moteur crée une session au début de chaque match et envoie toutes les requêtes suivantes dans le cadre de cette session.
+Tous les endpoints sont sous `/api/sessions/{sessionId}/`. Le moteur crée une session au début de chaque match et y rattache toutes les requêtes suivantes.
 
 ### Gestion des sessions
 
 | Méthode | Chemin | Description |
 |---------|--------|-------------|
-| `GET` | `/health` | Vérification de vie. Retournez `200 OK`. |
-| `POST` | `/api/sessions` | Crée une nouvelle instance de bot pour un match. Reçoit `{ "matchId": "..." }`, retourne `{ "sessionId": "..." }`. |
-| `DELETE` | `/api/sessions/{sessionId}` | Nettoyage après la fin du match. Retournez `200 OK`. |
+| `GET` | `/health` | Vérification de vie. Renvoyez `200 OK`. |
+| `POST` | `/api/sessions` | Crée une nouvelle instance de bot pour un match. Reçoit `{ "matchId": "..." }`, renvoyez `{ "sessionId": "..." }`. |
+| `DELETE` | `/api/sessions/{sessionId}` | Nettoyage en fin de match. Renvoyez `200 OK`. |
 
 ### Endpoints de décision
 
@@ -51,7 +51,7 @@ Ce sont les trois endpoints où votre bot fait réellement ses choix.
 
 ### Endpoints de notification (optionnel)
 
-Si votre `bot.meta.json` inclut un tableau `notifications`, le moteur fera des POST vers ceux-ci :
+Si votre `bot.meta.json` contient un tableau `notifications`, le moteur fera des POST vers ceux-ci :
 
 | Méthode | Chemin | Description |
 |---------|--------|-------------|
@@ -61,7 +61,7 @@ Si votre `bot.meta.json` inclut un tableau `notifications`, le moteur fera des P
 | `POST` | `/api/sessions/{sessionId}/notify/deal-ended` | La donne est terminée, voici les résultats. |
 | `POST` | `/api/sessions/{sessionId}/notify/match-ended` | Le match est terminé. |
 
-Les endpoints de notification doivent retourner `200 OK`. Ils fonctionnent en mode fire-and-forget. Le moteur n'utilise pas le corps de la réponse.
+Les endpoints de notification doivent renvoyer `200 OK`. Ils fonctionnent en fire-and-forget : le moteur n'utilise pas le corps de la réponse.
 
 ## Les 3 décisions
 
@@ -95,11 +95,11 @@ Le moteur demande où couper le jeu avant chaque donne.
 }
 ```
 
-`position` doit être entre 6 et 26.
+`position` doit être compris entre 6 et 26.
 
-### Choisir l'action de négociation
+### Choisir l'action d'enchère
 
-La phase d'enchères. Le moteur vous donne votre main et la liste des actions valides.
+C'est la phase de négociation. Le moteur vous transmet votre main et la liste des actions possibles.
 
 **Requête :**
 
@@ -131,7 +131,7 @@ La phase d'enchères. Le moteur vous donne votre main et la liste des actions va
 }
 ```
 
-**Réponse :** retournez un des objets de `validActions` :
+**Réponse :** renvoyez un des objets de `validActions` :
 
 ```json
 { "type": "Announce", "gameMode": "ColourHearts" }
@@ -139,7 +139,7 @@ La phase d'enchères. Le moteur vous donne votre main et la liste des actions va
 
 ### Choisir une carte
 
-La décision centrale. Le moteur vous donne le contexte complet du jeu et la liste des cartes légales.
+La décision centrale. Le moteur vous fournit le contexte complet de la partie et la liste des cartes jouables.
 
 **Requête :**
 
@@ -174,7 +174,7 @@ La décision centrale. Le moteur vous donne le contexte complet du jeu et la lis
 }
 ```
 
-**Réponse :** retournez une carte de `validPlays` :
+**Réponse :** renvoyez une carte parmi `validPlays` :
 
 ```json
 { "rank": "Ace", "suit": "Hearts" }
@@ -182,7 +182,7 @@ La décision centrale. Le moteur vous donne le contexte complet du jeu et la lis
 
 ## `bot.meta.json` pour les bots custom
 
-Quand vous n'utilisez pas de template, vous écrivez ce fichier de zéro. Voici la référence complète des champs :
+Sans template, c'est à vous d'écrire ce fichier. Voici la référence complète :
 
 ```json
 {
@@ -209,20 +209,20 @@ Quand vous n'utilisez pas de template, vous écrivez ce fichier de zéro. Voici 
 |-------|--------|-------------|
 | `name` | Oui | Identifiant unique. Minuscules, sans espaces. Doit correspondre au nom de votre dossier. |
 | `displayName` | Oui | Nom lisible pour les classements. |
-| `pun` | Non | Un mot d'esprit en guise de tagline. |
+| `pun` | Non | Une petite phrase en guise de tagline. |
 | `author` | Non | Votre nom. |
 | `authorGithub` | Non | Votre pseudo GitHub. |
 | `notifications` | Non | Tableau de types d'événements auxquels s'abonner. Options : `deal-started`, `card-played`, `trick-completed`, `deal-ended`, `match-ended`. |
-| `init.command` | Non | Programme à exécuter pour la mise en place (installer les deps, compiler). |
-| `init.arguments` | Non | Arguments pour la commande init. |
+| `init.command` | Non | Programme à exécuter pour la mise en place (installer les dépendances, compiler). |
+| `init.arguments` | Non | Arguments de la commande init. |
 | `launch.fileName` | Oui | Programme pour démarrer votre serveur. |
-| `launch.arguments` | Non | Arguments pour la commande de lancement. |
-| `launch.startupTimeout` | Non | Secondes à attendre avant que votre bot soit considéré comme sain (défaut : 15). |
-| `launch.healthEndpoint` | Oui | Chemin pour le health check (typiquement `"health"`). |
+| `launch.arguments` | Non | Arguments de la commande de lancement. |
+| `launch.startupTimeout` | Non | Délai en secondes avant que le bot soit considéré comme non-fonctionnel (défaut : 15). |
+| `launch.healthEndpoint` | Oui | Chemin pour le health check (en général `"health"`). |
 
 ## Référence du format réseau
 
-Toutes les valeurs sont en JSON. Voici les formes que votre bot enverra et recevra.
+Toutes les valeurs sont en JSON. Voici les structures que votre bot enverra et recevra.
 
 ### Card
 
@@ -240,7 +240,7 @@ Toutes les valeurs sont en JSON. Voici les formes que votre bot enverra et recev
 "Bottom"
 ```
 
-Une valeur parmi : `Bottom`, `Left`, `Top`, `Right`
+Valeurs possibles : `Bottom`, `Left`, `Top`, `Right`
 
 Votre bot est toujours `Bottom`. `Left` et `Right` sont les adversaires. `Top` est votre partenaire.
 
@@ -250,7 +250,7 @@ Votre bot est toujours `Bottom`. `Left` et `Right` sont les adversaires. `Top` e
 "Team1"
 ```
 
-Une valeur parmi : `Team1`, `Team2`
+Valeurs possibles : `Team1`, `Team2`
 
 `Team1` = Bottom + Top. `Team2` = Left + Right.
 
@@ -260,7 +260,7 @@ Une valeur parmi : `Team1`, `Team2`
 "ColourHearts"
 ```
 
-Une valeur parmi : `ColourClubs`, `ColourDiamonds`, `ColourHearts`, `ColourSpades`, `NoTrumps`, `AllTrumps`
+Valeurs possibles : `ColourClubs`, `ColourDiamonds`, `ColourHearts`, `ColourSpades`, `NoTrumps`, `AllTrumps`
 
 ### NegotiationAction
 
@@ -310,14 +310,14 @@ Types d'action : `Announce` (avec `gameMode`), `Accept`, `Pass`, `Double`, `Redo
 
 ## Cycle de vie d'un match
 
-Voici la séquence complète des appels que le moteur effectue au cours d'un match. Un match se compose de plusieurs donnes, et chaque donne a une phase de négociation suivie du jeu de cartes.
+Voici la séquence complète des appels que le moteur effectue au cours d'un match. Un match se compose de plusieurs donnes, chacune avec une phase d'enchères suivie du jeu de cartes.
 
 ```
 1. POST /api/sessions                     → Créer la session
 2. Pour chaque donne :
    a. POST .../notify/deal-started        → (si abonné)
    b. POST .../choose-cut                 → Couper le jeu
-   c. Phase de négociation :
+   c. Phase d'enchères :
       - POST .../choose-negotiation-action  (répété jusqu'à résolution)
    d. Phase de jeu :
       - POST .../choose-card              → Jouer une carte (votre tour)
@@ -328,13 +328,13 @@ Voici la séquence complète des appels que le moteur effectue au cours d'un mat
 4. DELETE /api/sessions/{sessionId}       → Nettoyage
 ```
 
-Le moteur n'appelle vos endpoints de décision que quand c'est votre tour. Vous ne recevrez jamais une requête `choose-card` quand c'est le tour d'un autre joueur. Les endpoints de notification se déclenchent pour les actions de tous les joueurs (si abonné).
+Le moteur n'appelle vos endpoints de décision que quand c'est à vous de jouer. Vous ne recevrez jamais de requête `choose-card` quand c'est le tour d'un autre joueur. Les endpoints de notification, eux, se déclenchent pour les actions de tous les joueurs (si vous y êtes abonné).
 
 ## Détails techniques
 
 ### Allocation de port
 
-Le moteur définit une variable d'environnement `PORT` avant de démarrer votre bot. Votre serveur doit lire cette variable et écouter sur ce port. Ne codez pas un port en dur.
+Le moteur définit une variable d'environnement `PORT` avant de démarrer votre bot. Votre serveur doit lire cette variable et écouter sur ce port. Ne codez jamais un port en dur.
 
 ```
 PORT=12345 ./my-bot
@@ -342,16 +342,16 @@ PORT=12345 ./my-bot
 
 ### Health check
 
-Après avoir démarré votre bot, le moteur interroge `GET /health` jusqu'à recevoir une réponse `200 OK` ou que le `startupTimeout` expire. Assurez-vous que votre endpoint health est disponible dès que votre serveur commence à écouter.
+Après le démarrage de votre bot, le moteur interroge `GET /health` en boucle jusqu'à recevoir un `200 OK` ou atteindre le `startupTimeout`. Assurez-vous que votre endpoint health répond dès que le serveur écoute.
 
 ### Isolation des sessions
 
-Chaque match obtient sa propre session via `POST /api/sessions`. Le moteur peut exécuter plusieurs matchs en parallèle, donc votre bot peut avoir plusieurs sessions actives. Gardez l'état de chaque session isolé. Ne partagez pas d'état mutable entre les sessions.
+Chaque match a sa propre session via `POST /api/sessions`. Le moteur peut lancer plusieurs matchs en parallèle, donc votre bot peut avoir plusieurs sessions actives simultanément. Gardez l'état de chaque session bien cloisonné. Pas d'état mutable partagé entre les sessions.
 
 ### Timeouts
 
-Le moteur attend des réponses dans un délai raisonnable. Si votre bot met trop de temps, le moteur jouera un coup par défaut à sa place. Visez des temps de réponse inférieurs à 100ms. Le seuil de validation P99 est de 500ms.
+Le moteur attend une réponse dans un délai raisonnable. Si votre bot met trop de temps, le moteur joue un coup par défaut à sa place. Visez des temps de réponse inférieurs à 100ms. Le seuil P99 de la validation est fixé à 500ms.
 
 ### Résilience
 
-Si votre bot plante ou retourne une réponse invalide, le moteur substitue un coup de repli (typiquement un jeu légal aléatoire) et continue le match. Ça ne vous disqualifiera pas, mais ça plombera votre taux de victoire. La commande `validate` signale tous les événements de repli pour que vous puissiez les corriger.
+Si votre bot plante ou renvoie une réponse invalide, le moteur lui substitue un coup de repli (en général un jeu légal aléatoire) et continue le match. Ça ne vous disqualifie pas, mais ça plombera votre taux de victoire. La commande `validate` signale tous ces coups de repli pour que vous puissiez les corriger.
