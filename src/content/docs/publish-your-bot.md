@@ -67,6 +67,25 @@ You can also limit participants:
 ./giretra-manage.sh swiss my-bot RandomPlayer CalculatingPlayer DeterministicPlayer
 ```
 
+### Test in the browser
+
+Before submitting, it's worth seeing your bot in action in the real web interface. You can run [play.giretra.com](https://play.giretra.com) locally with mocked authentication. First, install the frontend dependencies:
+
+```bash
+cd src/Giretra.Web/ClientApp/giretra-web
+npm install
+```
+
+Then start the app from the repository root:
+
+```bash
+dotnet run --project src/Giretra.Web -- --offline
+```
+
+The `--offline` flag runs the ASP.NET backend and the Angular frontend without needing any external services. Open [http://localhost:4200](http://localhost:4200) to access the app, find your bot, and play a match against it.
+
+**Watch the console output carefully.** When the app starts, it discovers and launches all external bots. If your bot fails to load (missing dependencies, build errors in your `init` script, port conflicts), the error will appear in stdout. This is the best way to catch issues that the CLI tools won't surface, like broken startup sequences or UI-facing problems.
+
 ## Preparing your pull request
 
 ### What to include

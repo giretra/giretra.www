@@ -56,15 +56,25 @@ Have an idea? Open an issue and describe it. There's no specific template you ne
 
 We'd rather hear a half-formed idea than miss a good one because someone thought it wasn't polished enough.
 
-## Design contributions
+## Design and visual art
 
-If you're more visual than verbal, we want your help too. You can:
+This is where we need the most help. Giretra is built by developers, and it shows. Card designs, illustrations, animations, color palettes, iconography, layout polish; all of it could use the eye of someone who actually knows what they're doing visually. If you have skills in graphic design, illustration, UI/UX, motion design, or even just strong opinions about what looks good, we want to hear from you.
+
+Here are some areas that could use attention:
+
+- **Card visuals.** The cards are functional but far from beautiful. Custom illustrations, better suits, richer textures. Anything that makes the deck feel alive.
+- **UI polish.** Spacing, typography, color consistency, responsive layouts. The kind of details that separate "it works" from "it feels right."
+- **Branding and identity.** Logo refinements, a cohesive color system, visual language across the site and the platform.
+- **Animations and interactions.** Card dealing, trick resolution, score updates. Subtle motion can make the experience much more satisfying.
+- **Illustrations.** Spot illustrations for documentation pages, empty states, error screens. Anything that adds personality.
+
+You don't need to write code. You can:
 
 - Attach mockups or screenshots to an issue
 - Share a Figma link
 - Describe the change in words. "The cards should have more contrast" is a perfectly valid starting point
 
-Design feedback doesn't need to come with code. Just tell us what you see and what you think could be better.
+If this is your thing, please don't be shy. A project like this lives or dies on how it looks and feels, and right now the visual side is its weakest point.
 
 ## Build a bot
 

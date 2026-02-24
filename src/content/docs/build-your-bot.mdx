@@ -311,6 +311,25 @@ See where your bot ranks against all available bots:
 
 This discovers all bots (built-in and external) and runs a full Swiss-system tournament with a final leaderboard, win/loss records, and ELO ratings. You can also pass specific bot names to limit the participants.
 
+### Try it in the browser
+
+You can run the full [play.giretra.com](https://play.giretra.com) web app locally to play against your bot in real game conditions. First, install the frontend dependencies:
+
+```bash
+cd src/Giretra.Web/ClientApp/giretra-web
+npm install
+```
+
+Then start the app from the repository root with the `--offline` flag:
+
+```bash
+dotnet run --project src/Giretra.Web -- --offline
+```
+
+This launches the ASP.NET backend and the Angular frontend with mocked authentication, so you don't need any external services. Open [http://localhost:4200](http://localhost:4200) in your browser to access the app.
+
+**Pay attention to the console output.** If your external bot fails to load (missing dependencies, broken `init` script, port conflict), the error will show up in stdout. This is the fastest way to catch startup issues before they become mysterious test failures.
+
 ## Observation events (optional)
 
 If you want your bot to track what other players are doing, subscribe to notifications by adding event types to `bot.meta.json`:
