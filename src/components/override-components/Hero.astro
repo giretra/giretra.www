@@ -27,7 +27,7 @@ const is404 = Astro.locals.starlightRoute?.id === "404";
   {
     !is404 && (
       <div class="mt-12 max-w-4xl">
-<div class="flex justify-center items-center flex-wrap gap-4">
+        <div class="flex justify-center items-center flex-wrap gap-4">
           <div class="flex gap-4 badges px-3 py-2.5 rounded-xl flex-wrap justify-center">
             <div class="play-badge rounded-lg px-2 py-1.5 group transition">
               <a
@@ -53,6 +53,20 @@ const is404 = Astro.locals.starlightRoute?.id === "404";
               );
             })}
           </div>
+        </div>
+
+        <div class="showcase-video mt-10">
+          <video
+            autoplay
+            loop
+            muted
+            playsinline
+            poster="/video/showcase-poster.jpg"
+            class="w-full rounded-2xl"
+          >
+            <source src="/video/showcase.webm" type="video/webm" />
+            <source src="/video/showcase.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
     )
@@ -95,6 +109,16 @@ const is404 = Astro.locals.starlightRoute?.id === "404";
     }
     .play-badge:hover {
       filter: brightness(1.15);
+    }
+
+    .showcase-video {
+      border: 1px solid color-mix(in srgb, var(--sl-color-white) 10%, transparent);
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+    .showcase-video video {
+      display: block;
     }
 
     @media (max-width: 940px) {
