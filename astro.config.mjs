@@ -18,6 +18,7 @@ export const locales = locals;
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://www.giretra.com",
   image: {
     service: { entrypoint: "astro/assets/services/noop" },
   },
