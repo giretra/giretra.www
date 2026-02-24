@@ -1,0 +1,440 @@
+---
+title: Manao ny Bot-nao
+description: Ataovy ao anaty bot ny fahalalanao ary avelao izy hifaninana ho anao.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Ny fanaovana bot manokana no fomba tsara indrindra hanehoana fa mahay ianao amin'ity lalao ity. Tsy resaka foana. Tsy fandrebirebena ny mpifanandrina hino fa diso ny fanisany boty. Vokatra mangatsiaka sy azo porofoina fotsiny.
+
+Manome template vonona ho an'ny **Python**, **TypeScript**, **C#**, **Go** ary **Java** izahay. Raha mahay manoratra function amin'ny iray amin'ireo ianao, dia afaka manao bot ianao. Tsy ilaina ny mahalala ny fomba fiasan'ny HTTP, ny parsing JSON, na ny fifandraisana eo amin'ny moteur de jeu. Misafidiana template, adikao ny dossier, ovao rakitra iray. Izay ihany.
+
+## Zavatra ilaina
+
+- **.NET 10**, ilaina hampiasana `giretra-manage`, ny fitaovana CLI hampiasainao hitsapana ny bot-nao
+- **Ny runtime ho an'ny fiteny-nao** : Node 20+ ho an'ny TypeScript, Python 3 ho an'ny Python, Go 1.23+ ho an'ny Go, Java 17+ ho an'ny Java
+
+Izay ihany. Tsy misy base de données, tsy misy file de messages, tsy misy orchestration de conteneurs.
+
+## Dingana 1 : Adikao ny dépôt
+
+```bash
+git clone https://github.com/giretra/giretra.git
+cd giretra
+```
+
+Ao anatin'io repo io avokoa ny zava-drehetra : template, fitaovana fitsapana, ary ny dossier bot hipetrahan'ny bot-nao.
+
+## Dingana 2 : Adikao ny template iray
+
+Adikao ny iray amin'ireo dossier template ao amin'ny `external-bots/` ary ovao ny anarany :
+
+<Tabs syncKey="lang">
+  <TabItem label="Python">
+    ```bash
+    cp -r external-bots/random-python-bot external-bots/my-bot
+    ```
+  </TabItem>
+  <TabItem label="TypeScript">
+    ```bash
+    cp -r external-bots/random-node-bot external-bots/my-bot
+    ```
+  </TabItem>
+  <TabItem label="C#">
+    ```bash
+    cp -r external-bots/random-dotnet-bot external-bots/my-bot
+    ```
+  </TabItem>
+  <TabItem label="Go">
+    ```bash
+    cp -r external-bots/random-go-bot external-bots/my-bot
+    ```
+  </TabItem>
+  <TabItem label="Java">
+    ```bash
+    cp -r external-bots/random-java-bot external-bots/my-bot
+    ```
+  </TabItem>
+</Tabs>
+
+Ny dossier template tsirairay dia misy :
+
+| Rakitra | Andraikitra | Ovaina ? |
+|---------|-------------|----------|
+| `bot.meta.json` | Mombamomba ny bot sy ny configuration de lancement | Eny |
+| Rakitry ny bot (`bot.py`, `bot.ts`, `Bot.cs`, `bot.go`, `Bot.java`) | Ny logique de jeu anao | Eny |
+| Rakitry ny serveur | Boilerplate HTTP | Tsia |
+| Famaritana karazana | Structures de données ho an'ny requête sy réponse | Tsia |
+
+## Dingana 3 : Amboary ny `bot.meta.json`
+
+Sokafy ny `bot.meta.json` ary ovao ny champs mombamomba :
+
+```json
+{
+  "name": "my-bot",
+  "displayName": "My Awesome Bot",
+  "pun": "I never bluff... except when I do",
+  "author": "Anaranao",
+  "authorGithub": "github-username-nao"
+}
+```
+
+Tondro ho an'ny champs :
+
+| Champ | Fanazavana |
+|-------|------------|
+| `name` | Anarana anatiny. Tsy maintsy tokana, litera kely, tsy misy espace. Anarana ho an'ny dossier-nao koa ity. |
+| `displayName` | Izay miseho ao amin'ny classement sy ny résultat-n'ny match. |
+| `pun` | Teny iray mahafinaritra miseho eo akaikin'ny anaran'ny bot-nao. Tsy voatery fa tsara raha misy. |
+| `author` | Ny anaranao. |
+| `authorGithub` | Ny GitHub username anao. |
+| `init` | Fomba fametrahana dépendances na compilation. Atao indray mandeha alohan'ny fanombohan'ny bot-nao. |
+| `launch` | Fomba fanombohana ny serveur-n'ny bot-nao. Ny moteur no mametraka variable d'environnement `PORT`. |
+
+Avelao `init` sy `launch` raha tsy mila manova ny fomba fanangonana na fanombohana ny bot-nao ianao. Efa voalamina tsara ireo ao amin'ny template.
+
+## Dingana 4 : Ampidiro ny logique-n'ny bot-nao
+
+Ny bot-nao dia mandray **karazana fanapahan-kevitra 3** monja :
+
+1. **Misafidiana toeran'ny fanapahana.** Alohan'ny donne tsirairay, misy manapaka ny karatra. Misafidiana toerana eo anelanelan'ny 6 sy 26.
+2. **Misafidiana action fifampiraharahana.** Ny fizotran'ny enchère. Ny moteur manome anao lisitry ny action azo atao (miantso fomba, mandray, contrer, surcontrer). Misafidiana iray.
+3. **Misafidiana karatra hilalaovana.** Ny fototry ny stratégie anao. Ny moteur manome anao lisitry ny karatra azo alalaovina. Misafidiana iray.
+
+Ity misy bot feno amin'ny fiteny tsirairay. Ity no **rakitra tokana ovainao** :
+
+<Tabs syncKey="lang">
+  <TabItem label="Python">
+    **`bot.py`**
+    ```python
+    import random
+    from bot_types import *
+
+    class Bot:
+        def __init__(self, match_id: str):
+            self.match_id = match_id
+
+        def choose_cut(self, ctx: ChooseCutContext) -> CutResult:
+            position = random.randint(6, 26)
+            return CutResult(position=position, from_top=True)
+
+        def choose_negotiation_action(
+            self, ctx: ChooseNegotiationActionContext
+        ) -> NegotiationActionChoice:
+            # ctx.valid_actions dia misy izay rehetra azo atao
+            return ctx.valid_actions[0]
+
+        def choose_card(self, ctx: ChooseCardContext) -> Card:
+            # ctx.valid_plays dia misy ny karatra ara-dalàna rehetra azo alalaovina
+            return random.choice(ctx.valid_plays)
+    ```
+  </TabItem>
+  <TabItem label="TypeScript">
+    **`bot.ts`**
+    ```typescript
+    import type {
+      ChooseCutContext, ChooseNegotiationActionContext,
+      ChooseCardContext, CutResult, NegotiationActionChoice, Card
+    } from './types';
+
+    export class Bot {
+      constructor(public readonly matchId: string) {}
+
+      chooseCut(ctx: ChooseCutContext): CutResult {
+        const position = Math.floor(Math.random() * 21) + 6;
+        return { position, fromTop: true };
+      }
+
+      chooseNegotiationAction(ctx: ChooseNegotiationActionContext): NegotiationActionChoice {
+        // ctx.validActions dia misy izay rehetra azo atao
+        return ctx.validActions[0];
+      }
+
+      chooseCard(ctx: ChooseCardContext): Card {
+        // ctx.validPlays dia misy ny karatra ara-dalàna rehetra azo alalaovina
+        return ctx.validPlays[Math.floor(Math.random() * ctx.validPlays.length)];
+      }
+    }
+    ```
+  </TabItem>
+  <TabItem label="C#">
+    **`Bot.cs`**
+    ```csharp
+    namespace RandomDotnetBot;
+
+    public class Bot
+    {
+        private readonly Random Rng = new();
+        public string MatchId { get; }
+
+        public Bot(string matchId) => MatchId = matchId;
+
+        public CutResult ChooseCut(ChooseCutContext ctx)
+        {
+            return new CutResult { Position = Rng.Next(6, 27), FromTop = true };
+        }
+
+        public NegotiationActionChoice ChooseNegotiationAction(
+            ChooseNegotiationActionContext ctx)
+        {
+            // ctx.ValidActions dia misy izay rehetra azo atao
+            return ctx.ValidActions[0];
+        }
+
+        public Card ChooseCard(ChooseCardContext ctx)
+        {
+            // ctx.ValidPlays dia misy ny karatra ara-dalàna rehetra azo alalaovina
+            return ctx.ValidPlays[Rng.Next(ctx.ValidPlays.Count)];
+        }
+    }
+    ```
+  </TabItem>
+  <TabItem label="Go">
+    **`bot.go`**
+    ```go
+    package main
+
+    import "math/rand/v2"
+
+    type Bot struct {
+        MatchID string
+    }
+
+    func NewBot(matchID string) *Bot {
+        return &Bot{MatchID: matchID}
+    }
+
+    func (b *Bot) ChooseCut(ctx ChooseCutContext) CutResult {
+        return CutResult{Position: rand.IntN(21) + 6, FromTop: true}
+    }
+
+    func (b *Bot) ChooseNegotiationAction(
+        ctx ChooseNegotiationActionContext,
+    ) NegotiationActionChoice {
+        // ctx.ValidActions dia misy izay rehetra azo atao
+        return ctx.ValidActions[0]
+    }
+
+    func (b *Bot) ChooseCard(ctx ChooseCardContext) Card {
+        // ctx.ValidPlays dia misy ny karatra ara-dalàna rehetra azo alalaovina
+        return ctx.ValidPlays[rand.IntN(len(ctx.ValidPlays))]
+    }
+    ```
+  </TabItem>
+  <TabItem label="Java">
+    **`Bot.java`**
+    ```java
+    package randomjavabot;
+
+    import java.util.concurrent.ThreadLocalRandom;
+    import randomjavabot.BotTypes.*;
+
+    public class Bot {
+        private final String matchId;
+
+        public Bot(String matchId) {
+            this.matchId = matchId;
+        }
+
+        public CutResult chooseCut(ChooseCutContext ctx) {
+            int position = ThreadLocalRandom.current().nextInt(6, 27);
+            return new CutResult(position, true);
+        }
+
+        public NegotiationActionChoice chooseNegotiationAction(
+                ChooseNegotiationActionContext ctx) {
+            // ctx.validActions() dia misy izay rehetra azo atao
+            return ctx.validActions().get(0);
+        }
+
+        public Card chooseCard(ChooseCardContext ctx) {
+            // ctx.validPlays() dia misy ny karatra ara-dalàna rehetra azo alalaovina
+            var plays = ctx.validPlays();
+            return plays.get(ThreadLocalRandom.current().nextInt(plays.size()));
+        }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+Izay ihany. Méthode telo. Ny moteur milaza aminao izay ara-dalàna amin'ny alalan'ny `validActions` sy `validPlays`, ka **tsy afaka manao fihetsika tsy ara-dalàna tsy nahy ianao**. Misafidiana ao amin'ny menu fotsiny. Manomboha tsotra, ary amboary tsikelikely.
+
+Ny contexte-n'ny requête dia ahitana koa ny karatra eny an-tananao, ny pli ankehitriny, ny isa, ary ny tantaran'ny fifampiraharahana, izay rehetra ilainao hanorenana stratégie tena izy.
+
+## Dingana 5 : Tsapao ny bot-nao
+
+Ny baiko rehetra eto ambany dia mieritreritra fa eo amin'ny fototry ny clone [Giretra](https://github.com/giretra/giretra) anao ianao. Ampiasao `./giretra-manage.sh` amin'ny Linux/macOS na `giretra-manage.cmd` amin'ny Windows.
+
+### Fanamarinana
+
+Ny baiko voalohany tokony ataonao. Mampilalao ny bot-nao amin'ny match 100 amin'ny `RandomPlayer` ary manamarina fa mandeha tsara ny zava-drehetra :
+
+```bash
+./giretra-manage.sh validate my-bot
+```
+
+Mahazo tatitra feno ianao misy :
+
+- **Fandikana fitsipika** sy isan'ny crash (ny tanjonao : aotra)
+- **Fotoana famaliana** isaky ny karazana fanapahan-kevitra (min, moy, P50, P95, P99, max)
+- **Firakofana ny fomba filalaovana** (raha voatsapa tamin'ny fomba enina rehetra ny bot-nao)
+- **Fironana performance** (ny fiovam-potoana famaliana mandritra ny run)
+
+Afaka amboarinao amin'ny option toy ny `-n 500` ho an'ny match betsaka kokoa, `-o CalculatingPlayer` ho an'ny mpifanandrina sarotra kokoa, `-d` ho an'ny fitsapana déterminisme, na `-v` ho an'ny antsipiriany momba ny fandikana fitsipika.
+
+### Benchmark
+
+Rehefa madio ny fanamarinana ny bot-nao, atrehoy ny mpifanandrina voarafitra :
+
+```bash
+./giretra-manage.sh benchmark my-bot RandomPlayer
+./giretra-manage.sh benchmark my-bot CalculatingPlayer
+./giretra-manage.sh benchmark my-bot DeterministicPlayer
+```
+
+| Bot | Hasarotana | Stratégie |
+|-----|-----------|----------|
+| `RandomPlayer` | Mora | Milalao kisendrasendra. Raha tsy maharesy azy ianao, misy olana. |
+| `CalculatingPlayer` | Antonony | Manara-maso karatra sy mamaky ny famantarana-n'ny mpiara-milalao. |
+| `DeterministicPlayer` | Sarotra | Fanisana karatra, fanadihadiana vide, filalaovana araka ny toerana. Ny boss ankehitriny. |
+
+Ny benchmark milalao match 1000 amin'ny ankapobeny ary manome anao ny taha-pandresena miaraka amin'ny intervalle de confiance 95%, ny classement ELO ary ny signification statistique. Ampiasao `-n` hanovana ny isan'ny match.
+
+### Tournoi suisse
+
+Jereo ny toeran'ny bot-nao eo amin'ny bot rehetra misy :
+
+```bash
+./giretra-manage.sh swiss
+```
+
+Io baiko io mahita ny bot rehetra (voarafitra sy externe) ary mandefa tournoi au format suisse feno miaraka amin'ny classement farany, ny tantaran'ny fandresena/faharesena ary ny classement ELO. Afaka mandefa anarana bot manokana koa ianao hamerana ny mpandray anjara.
+
+### Andramo ao amin'ny navigateur
+
+Afaka alefanao eo an-toerana ny application web [play.giretra.com](https://play.giretra.com) manontolo mba hilalaovana amin'ny bot-nao amin'ny toe-javatra tena izy. Voalohany, apetraho ny dépendances frontend :
+
+```bash
+cd src/Giretra.Web/ClientApp/giretra-web
+npm install
+```
+
+Avy eo alefaso ny application avy amin'ny fototry ny dépôt miaraka amin'ny flag `--offline` :
+
+```bash
+dotnet run --project src/Giretra.Web -- --offline
+```
+
+Izany dia manomboka ny backend ASP.NET sy ny frontend Angular miaraka amin'ny authentification simulée, ka tsy mila service externe. Sokafy ny [http://localhost:4200](http://localhost:4200) ao amin'ny navigateur-nao mba hidirana ny application.
+
+**Araho ny sortie console.** Raha tsy mipoitra ny bot externe anao (dépendances tsy ampy, script `init` simba, conflit de port), ny erreur dia hiseho ao amin'ny stdout. Izay ny fomba haingana indrindra hahitana olana amin'ny fanombohana alohan'ny hahatongavany ho échec de test saro-pantarina.
+
+## Événements d'observation (tsy voatery)
+
+Raha tianao ny bot-nao hanara-maso izay ataon'ny mpilalao hafa, abonnez azy amin'ny notification amin'ny fampidirana karazana événement ao amin'ny `bot.meta.json` :
+
+```json
+"notifications": ["card-played", "trick-completed", "deal-ended"]
+```
+
+Avy eo ampidiro ny méthode de gestion mifanaraka amin'izany :
+
+<Tabs syncKey="lang">
+  <TabItem label="Python">
+    ```python
+    def on_card_played(self, ctx: CardPlayedContext) -> None:
+        # Manara-maso ny karatra efa nolalaovina
+        pass
+
+    def on_trick_completed(self, ctx: TrickCompletedContext) -> None:
+        # Manara-maso ny pli azon'ny ekipa tsirairay
+        pass
+
+    def on_deal_ended(self, ctx: DealEndedContext) -> None:
+        # Mandinika ny vokatry ny donne
+        pass
+    ```
+  </TabItem>
+  <TabItem label="TypeScript">
+    ```typescript
+    onCardPlayed(ctx: CardPlayedContext): void {
+      // Manara-maso ny karatra efa nolalaovina
+    }
+
+    onTrickCompleted(ctx: TrickCompletedContext): void {
+      // Manara-maso ny pli azon'ny ekipa tsirairay
+    }
+
+    onDealEnded(ctx: DealEndedContext): void {
+      // Mandinika ny vokatry ny donne
+    }
+    ```
+  </TabItem>
+  <TabItem label="C#">
+    ```csharp
+    public virtual void OnCardPlayed(CardPlayedContext ctx)
+    {
+        // Manara-maso ny karatra efa nolalaovina
+    }
+
+    public virtual void OnTrickCompleted(TrickCompletedContext ctx)
+    {
+        // Manara-maso ny pli azon'ny ekipa tsirairay
+    }
+
+    public virtual void OnDealEnded(DealEndedContext ctx)
+    {
+        // Mandinika ny vokatry ny donne
+    }
+    ```
+  </TabItem>
+  <TabItem label="Go">
+    ```go
+    func (b *Bot) OnCardPlayed(ctx CardPlayedContext) {
+        // Manara-maso ny karatra efa nolalaovina
+    }
+
+    func (b *Bot) OnTrickCompleted(ctx TrickCompletedContext) {
+        // Manara-maso ny pli azon'ny ekipa tsirairay
+    }
+
+    func (b *Bot) OnDealEnded(ctx DealEndedContext) {
+        // Mandinika ny vokatry ny donne
+    }
+    ```
+  </TabItem>
+  <TabItem label="Java">
+    ```java
+    public void onCardPlayed(CardPlayedContext ctx) {
+        // Manara-maso ny karatra efa nolalaovina
+    }
+
+    public void onTrickCompleted(TrickCompletedContext ctx) {
+        // Manara-maso ny pli azon'ny ekipa tsirairay
+    }
+
+    public void onDealEnded(DealEndedContext ctx) {
+        // Mandinika ny vokatry ny donne
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+Événement misy : `deal-started`, `card-played`, `trick-completed`, `deal-ended`, `match-ended`.
+
+Tsara be ireo amin'ny fanorenana fahatsiarovana : manara-maso ny karatra efa nolalaovina, mahita vide, manisa isa. Fa tsy voatery mihitsy. Bot tsy misy état dia ampy tsara ho fanombohana.
+
+## Fitsipika
+
+Fitsipika iray : **tsy miantso ressource externe mandritra ny lalao**. Tsy misy appel API amin'ny IA cloud, tsy misy fifandraisana amin'ny serveur lavitra, tsy misy fanisintanana fichier stratégie mandritra ny lalao.
+
+Ny bot-nao mihodina eo an-toerana, mandray fanapahan-kevitra eo an-toerana. Afaka mampiasa librairie sy dépendances eo an-toerana rehetra tianao ianao : librairie mathématique, structures de données, na modèle ML eo an-toerana aza. Aoka ho autonome fotsiny.
+
+## Dingana manaraka
+
+Manomboha amin'ny bot adala indrindra fa mandeha. Tsapao azy. Avy eo ataovy maranitra kokoa, fanapahan-kevitra iray isaky ny mandeha. Reseo `RandomPlayer`, avy eo kendreo `CalculatingPlayer`, ary andramo aongana `DeterministicPlayer`.
+
+Vonona hivoaka amin'ny sehatra ? Araho ny torolalana [Publier ny Bot-nao](/publish-your-bot/) mba hanokafana pull request sy hahatonga ny bot-nao ho azo lalaoina amin'ny [play.giretra.com](https://play.giretra.com).
+
+Te hahalala ny protocole ao ambadika na te hanao bot amin'ny fiteny tsy misy template ? Jereo ny [Manao avy amin'ny tsy misy](/build-your-bot-custom/).

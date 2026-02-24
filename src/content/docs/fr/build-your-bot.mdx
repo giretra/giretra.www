@@ -1,0 +1,440 @@
+---
+title: Créer votre Bot
+description: Mettez vos connaissances dans un bot et laissez-le concourir pour vous.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Créer votre propre bot est la meilleure façon de prouver votre supériorité à ce jeu. Pas de trash talk. Pas de gaslighting pour convaincre votre adversaire qu'il a mal compté les atouts. Juste des résultats froids et vérifiables.
+
+On fournit des templates prêts à l'emploi pour **Python**, **TypeScript**, **C#**, **Go** et **Java**. Si vous savez écrire une fonction dans l'un de ces langages, vous pouvez créer un bot. Pas besoin de comprendre le fonctionnement de HTTP, le parsing de JSON, ou la communication entre moteurs de jeu. Choisissez un template, dupliquez le dossier, éditez un fichier. C'est tout.
+
+## Prérequis
+
+- **.NET 10**, requis pour lancer `giretra-manage`, l'outil CLI que vous utiliserez pour tester votre bot
+- **Le runtime de votre langage** : Node 20+ pour TypeScript, Python 3 pour Python, Go 1.23+ pour Go, Java 17+ pour Java
+
+C'est tout. Pas de base de données, pas de file de messages, pas d'orchestration de conteneurs.
+
+## Étape 1 : Cloner le dépôt
+
+```bash
+git clone https://github.com/giretra/giretra.git
+cd giretra
+```
+
+Tout se passe dans ce repo : templates, outils de test, et le dossier bot où votre bot vivra.
+
+## Étape 2 : Copier un template
+
+Copiez l'un des dossiers template dans `external-bots/` et renommez-le :
+
+<Tabs syncKey="lang">
+  <TabItem label="Python">
+    ```bash
+    cp -r external-bots/random-python-bot external-bots/my-bot
+    ```
+  </TabItem>
+  <TabItem label="TypeScript">
+    ```bash
+    cp -r external-bots/random-node-bot external-bots/my-bot
+    ```
+  </TabItem>
+  <TabItem label="C#">
+    ```bash
+    cp -r external-bots/random-dotnet-bot external-bots/my-bot
+    ```
+  </TabItem>
+  <TabItem label="Go">
+    ```bash
+    cp -r external-bots/random-go-bot external-bots/my-bot
+    ```
+  </TabItem>
+  <TabItem label="Java">
+    ```bash
+    cp -r external-bots/random-java-bot external-bots/my-bot
+    ```
+  </TabItem>
+</Tabs>
+
+Chaque dossier template contient :
+
+| Fichier | Rôle | À modifier ? |
+|---------|------|--------------|
+| `bot.meta.json` | Identité du bot et configuration de lancement | Oui |
+| Fichier bot (`bot.py`, `bot.ts`, `Bot.cs`, `bot.go`, `Bot.java`) | Votre logique de jeu | Oui |
+| Fichier serveur | Boilerplate HTTP | Non |
+| Définitions de types | Structures de données pour les requêtes et réponses | Non |
+
+## Étape 3 : Configurer `bot.meta.json`
+
+Ouvrez `bot.meta.json` et mettez à jour les champs d'identité :
+
+```json
+{
+  "name": "my-bot",
+  "displayName": "My Awesome Bot",
+  "pun": "I never bluff... except when I do",
+  "author": "Votre Nom",
+  "authorGithub": "votre-pseudo-github"
+}
+```
+
+Référence des champs :
+
+| Champ | Description |
+|-------|-------------|
+| `name` | Identifiant interne. Doit être unique, en minuscules, sans espaces. C'est aussi le nom de votre dossier. |
+| `displayName` | Ce qui s'affiche dans les classements et résultats de matchs. |
+| `pun` | Un mot d'esprit affiché à côté du nom de votre bot. Optionnel mais encouragé. |
+| `author` | Votre nom. |
+| `authorGithub` | Votre pseudo GitHub. |
+| `init` | Comment installer les dépendances ou compiler. Exécuté une fois avant le démarrage de votre bot. |
+| `launch` | Comment démarrer le serveur de votre bot. Le moteur définit une variable d'environnement `PORT`. |
+
+Laissez `init` et `launch` tranquilles sauf si vous devez changer la façon dont votre bot se compile ou se lance. Les templates sont déjà configurés correctement.
+
+## Étape 4 : Implémenter la logique de votre bot
+
+Votre bot prend exactement **3 types de décisions** :
+
+1. **Choisir une position de coupe.** Avant chaque donne, quelqu'un coupe le jeu. Choisissez une position entre 6 et 26.
+2. **Choisir une action de négociation.** La phase d'enchères. Le moteur vous donne la liste des actions valides (annoncer un mode, accepter, contrer, surcontrer). Choisissez-en une.
+3. **Choisir une carte à jouer.** Le cœur de votre stratégie. Le moteur vous donne la liste des cartes valides. Choisissez-en une.
+
+Voici un bot complet dans chaque langage. C'est le **seul fichier que vous modifiez** :
+
+<Tabs syncKey="lang">
+  <TabItem label="Python">
+    **`bot.py`**
+    ```python
+    import random
+    from bot_types import *
+
+    class Bot:
+        def __init__(self, match_id: str):
+            self.match_id = match_id
+
+        def choose_cut(self, ctx: ChooseCutContext) -> CutResult:
+            position = random.randint(6, 26)
+            return CutResult(position=position, from_top=True)
+
+        def choose_negotiation_action(
+            self, ctx: ChooseNegotiationActionContext
+        ) -> NegotiationActionChoice:
+            # ctx.valid_actions contient tout ce que vous pouvez faire
+            return ctx.valid_actions[0]
+
+        def choose_card(self, ctx: ChooseCardContext) -> Card:
+            # ctx.valid_plays contient toutes les cartes légales jouables
+            return random.choice(ctx.valid_plays)
+    ```
+  </TabItem>
+  <TabItem label="TypeScript">
+    **`bot.ts`**
+    ```typescript
+    import type {
+      ChooseCutContext, ChooseNegotiationActionContext,
+      ChooseCardContext, CutResult, NegotiationActionChoice, Card
+    } from './types';
+
+    export class Bot {
+      constructor(public readonly matchId: string) {}
+
+      chooseCut(ctx: ChooseCutContext): CutResult {
+        const position = Math.floor(Math.random() * 21) + 6;
+        return { position, fromTop: true };
+      }
+
+      chooseNegotiationAction(ctx: ChooseNegotiationActionContext): NegotiationActionChoice {
+        // ctx.validActions contient tout ce que vous pouvez faire
+        return ctx.validActions[0];
+      }
+
+      chooseCard(ctx: ChooseCardContext): Card {
+        // ctx.validPlays contient toutes les cartes légales jouables
+        return ctx.validPlays[Math.floor(Math.random() * ctx.validPlays.length)];
+      }
+    }
+    ```
+  </TabItem>
+  <TabItem label="C#">
+    **`Bot.cs`**
+    ```csharp
+    namespace RandomDotnetBot;
+
+    public class Bot
+    {
+        private readonly Random Rng = new();
+        public string MatchId { get; }
+
+        public Bot(string matchId) => MatchId = matchId;
+
+        public CutResult ChooseCut(ChooseCutContext ctx)
+        {
+            return new CutResult { Position = Rng.Next(6, 27), FromTop = true };
+        }
+
+        public NegotiationActionChoice ChooseNegotiationAction(
+            ChooseNegotiationActionContext ctx)
+        {
+            // ctx.ValidActions contient tout ce que vous pouvez faire
+            return ctx.ValidActions[0];
+        }
+
+        public Card ChooseCard(ChooseCardContext ctx)
+        {
+            // ctx.ValidPlays contient toutes les cartes légales jouables
+            return ctx.ValidPlays[Rng.Next(ctx.ValidPlays.Count)];
+        }
+    }
+    ```
+  </TabItem>
+  <TabItem label="Go">
+    **`bot.go`**
+    ```go
+    package main
+
+    import "math/rand/v2"
+
+    type Bot struct {
+        MatchID string
+    }
+
+    func NewBot(matchID string) *Bot {
+        return &Bot{MatchID: matchID}
+    }
+
+    func (b *Bot) ChooseCut(ctx ChooseCutContext) CutResult {
+        return CutResult{Position: rand.IntN(21) + 6, FromTop: true}
+    }
+
+    func (b *Bot) ChooseNegotiationAction(
+        ctx ChooseNegotiationActionContext,
+    ) NegotiationActionChoice {
+        // ctx.ValidActions contient tout ce que vous pouvez faire
+        return ctx.ValidActions[0]
+    }
+
+    func (b *Bot) ChooseCard(ctx ChooseCardContext) Card {
+        // ctx.ValidPlays contient toutes les cartes légales jouables
+        return ctx.ValidPlays[rand.IntN(len(ctx.ValidPlays))]
+    }
+    ```
+  </TabItem>
+  <TabItem label="Java">
+    **`Bot.java`**
+    ```java
+    package randomjavabot;
+
+    import java.util.concurrent.ThreadLocalRandom;
+    import randomjavabot.BotTypes.*;
+
+    public class Bot {
+        private final String matchId;
+
+        public Bot(String matchId) {
+            this.matchId = matchId;
+        }
+
+        public CutResult chooseCut(ChooseCutContext ctx) {
+            int position = ThreadLocalRandom.current().nextInt(6, 27);
+            return new CutResult(position, true);
+        }
+
+        public NegotiationActionChoice chooseNegotiationAction(
+                ChooseNegotiationActionContext ctx) {
+            // ctx.validActions() contient tout ce que vous pouvez faire
+            return ctx.validActions().get(0);
+        }
+
+        public Card chooseCard(ChooseCardContext ctx) {
+            // ctx.validPlays() contient toutes les cartes légales jouables
+            var plays = ctx.validPlays();
+            return plays.get(ThreadLocalRandom.current().nextInt(plays.size()));
+        }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+C'est tout. Trois méthodes. Le moteur vous indique ce qui est légal via `validActions` et `validPlays`, donc vous **ne pouvez pas faire de coup illégal par accident**. Vous choisissez dans le menu. Commencez simple, itérez.
+
+Les contextes de requête incluent aussi votre main, le pli en cours, les scores et l'historique de négociation, tout ce qu'il faut pour construire une vraie stratégie.
+
+## Étape 5 : Tester votre bot
+
+Toutes les commandes ci-dessous supposent que vous êtes à la racine de votre clone [Giretra](https://github.com/giretra/giretra). Utilisez `./giretra-manage.sh` sur Linux/macOS ou `giretra-manage.cmd` sur Windows.
+
+### Valider
+
+La première commande à lancer. Elle fait jouer votre bot pendant 100 matchs contre `RandomPlayer` et vérifie que tout fonctionne :
+
+```bash
+./giretra-manage.sh validate my-bot
+```
+
+Vous obtenez un rapport complet avec :
+
+- **Violations de règles** et nombre de crashs (votre objectif : zéro)
+- **Temps de réponse** par type de décision (min, moy, P50, P95, P99, max)
+- **Couverture des modes de jeu** (si votre bot a été testé sur les six modes)
+- **Tendance de performance** (stabilité du temps de réponse sur l'ensemble du run)
+
+Vous pouvez ajuster l'exécution avec des options comme `-n 500` pour plus de matchs, `-o CalculatingPlayer` pour un adversaire plus coriace, `-d` pour un test de déterminisme, ou `-v` pour le détail des violations.
+
+### Benchmark
+
+Une fois votre bot validé sans erreur, confrontez-le aux adversaires intégrés :
+
+```bash
+./giretra-manage.sh benchmark my-bot RandomPlayer
+./giretra-manage.sh benchmark my-bot CalculatingPlayer
+./giretra-manage.sh benchmark my-bot DeterministicPlayer
+```
+
+| Bot | Difficulté | Stratégie |
+|-----|-----------|----------|
+| `RandomPlayer` | Facile | Joue au hasard. Si vous ne le battez pas, il y a un problème. |
+| `CalculatingPlayer` | Moyen | Suit les cartes et lit les signaux du partenaire. |
+| `DeterministicPlayer` | Difficile | Comptage de cartes, inférence de vides, jeu positionnel. Le boss actuel. |
+
+Le benchmark joue 1000 matchs par défaut et vous donne les taux de victoire avec intervalles de confiance à 95%, les classements ELO et la significativité statistique. Utilisez `-n` pour changer le nombre de matchs.
+
+### Tournoi suisse
+
+Voyez où votre bot se classe parmi tous les bots disponibles :
+
+```bash
+./giretra-manage.sh swiss
+```
+
+Cette commande découvre tous les bots (intégrés et externes) et lance un tournoi au format suisse complet avec classement final, bilans victoires/défaites et classements ELO. Vous pouvez aussi passer des noms de bots spécifiques pour limiter les participants.
+
+### Essayez dans le navigateur
+
+Vous pouvez lancer l'application web complète de [play.giretra.com](https://play.giretra.com) en local pour jouer contre votre bot dans des conditions de jeu réelles. D'abord, installez les dépendances frontend :
+
+```bash
+cd src/Giretra.Web/ClientApp/giretra-web
+npm install
+```
+
+Puis lancez l'application depuis la racine du dépôt avec le flag `--offline` :
+
+```bash
+dotnet run --project src/Giretra.Web -- --offline
+```
+
+Cela démarre le backend ASP.NET et le frontend Angular avec une authentification simulée, donc aucun service externe n'est nécessaire. Ouvrez [http://localhost:4200](http://localhost:4200) dans votre navigateur pour accéder à l'application.
+
+**Surveillez la sortie console.** Si votre bot externe ne se charge pas (dépendances manquantes, script `init` cassé, conflit de port), l'erreur apparaîtra dans stdout. C'est le moyen le plus rapide de repérer les problèmes de démarrage avant qu'ils ne deviennent des échecs de test mystérieux.
+
+## Événements d'observation (optionnel)
+
+Si vous voulez que votre bot suive ce que font les autres joueurs, abonnez-le aux notifications en ajoutant des types d'événements dans `bot.meta.json` :
+
+```json
+"notifications": ["card-played", "trick-completed", "deal-ended"]
+```
+
+Puis implémentez les méthodes de gestion correspondantes :
+
+<Tabs syncKey="lang">
+  <TabItem label="Python">
+    ```python
+    def on_card_played(self, ctx: CardPlayedContext) -> None:
+        # Suivre les cartes jouées
+        pass
+
+    def on_trick_completed(self, ctx: TrickCompletedContext) -> None:
+        # Suivre les plis remportés par chaque équipe
+        pass
+
+    def on_deal_ended(self, ctx: DealEndedContext) -> None:
+        # Analyser les résultats de la donne
+        pass
+    ```
+  </TabItem>
+  <TabItem label="TypeScript">
+    ```typescript
+    onCardPlayed(ctx: CardPlayedContext): void {
+      // Suivre les cartes jouées
+    }
+
+    onTrickCompleted(ctx: TrickCompletedContext): void {
+      // Suivre les plis remportés par chaque équipe
+    }
+
+    onDealEnded(ctx: DealEndedContext): void {
+      // Analyser les résultats de la donne
+    }
+    ```
+  </TabItem>
+  <TabItem label="C#">
+    ```csharp
+    public virtual void OnCardPlayed(CardPlayedContext ctx)
+    {
+        // Suivre les cartes jouées
+    }
+
+    public virtual void OnTrickCompleted(TrickCompletedContext ctx)
+    {
+        // Suivre les plis remportés par chaque équipe
+    }
+
+    public virtual void OnDealEnded(DealEndedContext ctx)
+    {
+        // Analyser les résultats de la donne
+    }
+    ```
+  </TabItem>
+  <TabItem label="Go">
+    ```go
+    func (b *Bot) OnCardPlayed(ctx CardPlayedContext) {
+        // Suivre les cartes jouées
+    }
+
+    func (b *Bot) OnTrickCompleted(ctx TrickCompletedContext) {
+        // Suivre les plis remportés par chaque équipe
+    }
+
+    func (b *Bot) OnDealEnded(ctx DealEndedContext) {
+        // Analyser les résultats de la donne
+    }
+    ```
+  </TabItem>
+  <TabItem label="Java">
+    ```java
+    public void onCardPlayed(CardPlayedContext ctx) {
+        // Suivre les cartes jouées
+    }
+
+    public void onTrickCompleted(TrickCompletedContext ctx) {
+        // Suivre les plis remportés par chaque équipe
+    }
+
+    public void onDealEnded(DealEndedContext ctx) {
+        // Analyser les résultats de la donne
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+Événements disponibles : `deal-started`, `card-played`, `trick-completed`, `deal-ended`, `match-ended`.
+
+Parfaits pour construire une mémoire : suivre les cartes jouées, détecter les vides, compter les points. Mais ils sont entièrement optionnels. Un bot sans état fonctionne très bien pour commencer.
+
+## Règles
+
+Une seule règle : **pas d'appel à des ressources externes pendant le jeu**. Pas d'appels API vers une IA cloud, pas de communication avec un serveur distant, pas de téléchargement de fichiers de stratégie en pleine partie.
+
+Votre bot tourne en local, décide en local. Vous pouvez utiliser toutes les librairies et dépendances locales que vous voulez : librairies mathématiques, structures de données, même un modèle ML local. Tant que ça reste autonome.
+
+## Prochaines étapes
+
+Commencez par le bot le plus bête qui fonctionne. Validez-le. Puis rendez-le plus malin, une décision à la fois. Battez `RandomPlayer`, puis visez `CalculatingPlayer`, puis essayez de détrôner `DeterministicPlayer`.
+
+Prêt à passer en production ? Suivez le guide [Publier votre Bot](/publish-your-bot/) pour ouvrir une pull request et rendre votre bot jouable sur [play.giretra.com](https://play.giretra.com).
+
+Envie de comprendre le protocole sous le capot ou de créer un bot dans un langage sans template ? Consultez [Créer de zéro](/build-your-bot-custom/).
