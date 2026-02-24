@@ -10,7 +10,7 @@ Les templates gèrent le HTTP à votre place, mais si vous voulez tout construir
 Le moteur contrôle tout. Votre bot se contente de répondre.
 
 ```
-┌─────────────────────┐                     ┌─────────────────────┐
+┌─────────────────────┐                      ┌─────────────────────┐
 │                     │   POST /choose-card  │                     │
 │   Moteur Giretra    │ ──────────────────►  │     Votre Bot       │
 │                     │                      │                     │

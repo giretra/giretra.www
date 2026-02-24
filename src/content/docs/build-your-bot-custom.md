@@ -10,7 +10,7 @@ The templates handle HTTP for you, but if you want to roll your own in Rust, Has
 The engine controls everything. Your bot just responds.
 
 ```
-┌─────────────────────┐                     ┌─────────────────────┐
+┌─────────────────────┐                      ┌─────────────────────┐
 │                     │   POST /choose-card  │                     │
 │   Giretra Engine    │ ──────────────────►  │      Your Bot       │
 │                     │                      │                     │

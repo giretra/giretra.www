@@ -10,12 +10,12 @@ Ny template no mitantana ny HTTP ho anao, fa raha te hanao ny anao manokana amin
 Ny moteur no mifehy ny zava-drehetra. Ny bot-nao dia mamaly fotsiny.
 
 ```
-┌─────────────────────┐                     ┌─────────────────────┐
+┌─────────────────────┐                      ┌─────────────────────┐
 │                     │   POST /choose-card  │                     │
 │   Moteur Giretra    │ ──────────────────►  │     Ny Bot-nao      │
 │                     │                      │                     │
 │  • mitantana état   │  ◄────────────────── │  • mandray          │
-│  • mampihatra       │    valiny JSON       │    fanapahan-kevitra │
+│  • mampihatra       │    valiny JSON       │    fanapahan-kevitra│
 │    fitsipika        │                      │  • misy na tsy misy │
 │  • manara-maso isa  │                      │    état             │
 │                     │                      │                     │
