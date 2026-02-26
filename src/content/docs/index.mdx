@@ -1,5 +1,5 @@
 ---
-title: Your Belote Gasy digital playground
+title: A digital playground<br/> for Malagasy-style Belote
 description: An open source malagasy belote like-game. Play, learn, build, contribute.
 template: splash
 hero:
@@ -21,3 +21,54 @@ hero:
       icon: github
       variant: secondary
 ---
+
+import Section from "~/components/Section.astro";
+import Card from "~/components/user-components/NewCard.astro";
+import Grid from "~/components/user-components/Grid.astro";
+import LinkButton from "~/components/LinkButton.astro";
+import ListCard from "~/components/user-components/ListCard.astro";
+import LangCard from "~/components/user-components/LangCard.astro";
+import LangGrid from "~/components/user-components/LangGrid.astro";
+
+<Section title="Everything you need <span class='light-text'>to get started</span>" description="Giretra is a trick-taking card game from Madagascar, born from the Belote family. Four players, two teams, 32 cards.">
+
+<Grid columns={4}>
+  <Card title="Learn the rules" icon="open-book" iconColor="#7BE1A4">
+    From setup to scoring, everything you need to know to play Giretra.
+  </Card>
+  <Card title="Build your bot" icon="rocket" iconColor="#FFD97B">
+    Put your knowledge into a bot and let it compete for you on the platform.
+  </Card>
+  <Card title="Open source" icon="github" iconColor="#979BFF">
+    Giretra is fully open source. Read the code, fork it, improve it.
+  </Card>
+  <Card title="Play online" icon="external" iconColor="#FF8585">
+    Start a game now on play.giretra.com with friends or solo.
+  </Card>
+</Grid>
+
+</Section>
+
+<Section title="Build your bot <span class='light-text'>in your language</span>" description="Ready-to-go templates so you can focus on strategy, not boilerplate. Pick your language, duplicate a folder, edit one file.">
+
+<LangGrid>
+  <LangCard name="Python" logo="/src/assets/lang-python.svg">
+    Type-hinted template with clean OOP structure.
+  </LangCard>
+  <LangCard name="TypeScript" logo="/src/assets/lang-typescript.svg">
+    Fully typed template with modern ES modules.
+  </LangCard>
+  <LangCard name="C#" logo="/src/assets/lang-csharp.svg">
+    .NET 10 template powered by ASP.NET Core.
+  </LangCard>
+  <LangCard name="Go" logo="/src/assets/lang-go.svg">
+    Compiles to a native binary. Zero dependencies.
+  </LangCard>
+  <LangCard name="Java" logo="/src/assets/lang-java.svg">
+    Java 17+ with Maven. Packages to a single JAR.
+  </LangCard>
+</LangGrid>
+
+<LinkButton href="/build-your-bot/" variant="text" className="mt-8 ml-1">Start building</LinkButton>
+
+</Section>

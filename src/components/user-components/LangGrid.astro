@@ -1,0 +1,33 @@
+---
+---
+
+<div class="lang-grid"><slot /></div>
+
+<style>
+  @layer starlight.components {
+    .lang-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(2, 1fr);
+      margin-top: 1.4rem;
+    }
+
+    .lang-grid > :global(*) {
+      margin-top: 0 !important;
+    }
+
+    @media (min-width: 640px) {
+      .lang-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .lang-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1.5rem;
+      }
+    }
+  }
+</style>

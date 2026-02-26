@@ -1,0 +1,81 @@
+---
+import ImageMod from "../ImageMod.astro";
+
+const { name, logo } = Astro.props;
+---
+
+<div class="lang-card group">
+  <div class="lang-icon">
+    <ImageMod
+      src={logo}
+      alt={name}
+      width={56}
+      height={56}
+      class="lang-logo-img"
+    />
+  </div>
+  <p class="lang-name">{name}</p>
+  <div class="lang-desc"><slot /></div>
+</div>
+
+<style>
+  @layer starlight.components {
+    .lang-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 1.2rem;
+      background: var(--sl-color-black);
+      border: 1px solid var(--sl-color-gray-6);
+      border-radius: 1rem;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .lang-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      background: var(--color-primary-gradient);
+      border-radius: inherit;
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      -webkit-mask-composite: xor;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .lang-card:hover::before {
+      opacity: 1;
+    }
+
+    .lang-icon {
+      width: 56px;
+      height: 56px;
+      margin-bottom: 1.2rem;
+    }
+
+    .lang-icon :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .lang-name {
+      font-size: var(--sl-text-h5);
+      font-weight: 600;
+      color: var(--sl-color-white);
+      margin: 0 0 0.5rem;
+      line-height: var(--sl-line-height-headings);
+    }
+
+    .lang-desc {
+      font-size: var(--sl-text-sm);
+      margin: 0;
+    }
+  }
+</style>
