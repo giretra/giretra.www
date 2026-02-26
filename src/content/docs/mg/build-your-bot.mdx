@@ -268,7 +268,7 @@ Ny baiko rehetra eto ambany dia mieritreritra fa eo amin'ny fototry ny clone [Gi
 
 ### Fanamarinana
 
-Ny baiko voalohany tokony ataonao. Mampilalao ny bot-nao amin'ny match 100 amin'ny `RandomPlayer` ary manamarina fa mandeha tsara ny zava-drehetra :
+Ny baiko voalohany tokony ataonao. Mampilalao ny bot-nao amin'ny match 100 amin'ny `Kialasoa` ary manamarina fa mandeha tsara ny zava-drehetra :
 
 ```bash
 ./giretra-manage.sh validate my-bot
@@ -281,23 +281,23 @@ Mahazo tatitra feno ianao misy :
 - **Firakofana ny fomba filalaovana** (raha voatsapa tamin'ny fomba enina rehetra ny bot-nao)
 - **Fironana performance** (ny fiovam-potoana famaliana mandritra ny run)
 
-Afaka amboarinao amin'ny option toy ny `-n 500` ho an'ny match betsaka kokoa, `-o CalculatingPlayer` ho an'ny mpifanandrina sarotra kokoa, `-d` ho an'ny fitsapana déterminisme, na `-v` ho an'ny antsipiriany momba ny fandikana fitsipika.
+Afaka amboarinao amin'ny option toy ny `-n 500` ho an'ny match betsaka kokoa, `-o Razavavy` ho an'ny mpifanandrina sarotra kokoa, `-d` ho an'ny fitsapana déterminisme, na `-v` ho an'ny antsipiriany momba ny fandikana fitsipika.
 
 ### Benchmark
 
 Rehefa madio ny fanamarinana ny bot-nao, atrehoy ny mpifanandrina voarafitra :
 
 ```bash
-./giretra-manage.sh benchmark my-bot RandomPlayer
-./giretra-manage.sh benchmark my-bot CalculatingPlayer
-./giretra-manage.sh benchmark my-bot DeterministicPlayer
+./giretra-manage.sh benchmark my-bot Kialasoa
+./giretra-manage.sh benchmark my-bot Razavavy
+./giretra-manage.sh benchmark my-bot Eva
 ```
 
 | Bot | Hasarotana | Stratégie |
 |-----|-----------|----------|
-| `RandomPlayer` | Mora | Milalao kisendrasendra. Raha tsy maharesy azy ianao, misy olana. |
-| `CalculatingPlayer` | Antonony | Manara-maso karatra sy mamaky ny famantarana-n'ny mpiara-milalao. |
-| `DeterministicPlayer` | Sarotra | Fanisana karatra, fanadihadiana vide, filalaovana araka ny toerana. Ny boss ankehitriny. |
+| `Kialasoa` | Mora | Milalao kisendrasendra. Raha tsy maharesy azy ianao, misy olana. |
+| `Razavavy` | Antonony | Manara-maso karatra sy mamaky ny famantarana-n'ny mpiara-milalao. |
+| `Eva` | Sarotra | Fanisana karatra, fanadihadiana vide, filalaovana araka ny toerana. Ny boss ankehitriny. |
 
 Ny benchmark milalao match 1000 amin'ny ankapobeny ary manome anao ny taha-pandresena miaraka amin'ny intervalle de confiance 95%, ny classement ELO ary ny signification statistique. Ampiasao `-n` hanovana ny isan'ny match.
 
@@ -433,7 +433,7 @@ Ny bot-nao mihodina eo an-toerana, mandray fanapahan-kevitra eo an-toerana. Afak
 
 ## Dingana manaraka
 
-Manomboha amin'ny bot adala indrindra fa mandeha. Tsapao azy. Avy eo ataovy maranitra kokoa, fanapahan-kevitra iray isaky ny mandeha. Reseo `RandomPlayer`, avy eo kendreo `CalculatingPlayer`, ary andramo aongana `DeterministicPlayer`.
+Manomboha amin'ny bot adala indrindra fa mandeha. Tsapao azy. Avy eo ataovy maranitra kokoa, fanapahan-kevitra iray isaky ny mandeha. Reseo `Kialasoa`, avy eo kendreo `Razavavy`, ary andramo aongana `Eva`.
 
 Vonona hivoaka amin'ny sehatra ? Araho ny torolalana [Publier ny Bot-nao](/publish-your-bot/) mba hanokafana pull request sy hahatonga ny bot-nao ho azo lalaoina amin'ny [play.giretra.com](https://play.giretra.com).
 

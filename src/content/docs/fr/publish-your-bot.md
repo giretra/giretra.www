@@ -3,7 +3,7 @@ title: Publier votre Bot
 description: Soumettez votre bot au dépôt Giretra et rendez-le jouable sur play.giretra.com.
 ---
 
-Votre bot écrase `RandomPlayer` sans forcer. Il tient tête à `CalculatingPlayer`. Peut-être même qu'il donne du fil à retordre à `DeterministicPlayer`. Il est temps de le mettre en ligne et de le confronter à de vrais joueurs.
+Votre bot écrase `Kialasoa` sans forcer. Il tient tête à `Razavavy`. Peut-être même qu'il donne du fil à retordre à `Eva`. Il est temps de le mettre en ligne et de le confronter à de vrais joueurs.
 
 Publier votre bot, c'est ouvrir une pull request sur le dépôt [giretra/giretra](https://github.com/giretra/giretra). Une fois fusionnée, votre bot devient disponible sur [play.giretra.com](https://play.giretra.com), la plateforme multijoueur en ligne où humains et bots s'affrontent en matchs classés.
 
@@ -17,14 +17,14 @@ Avant d'ouvrir une PR, lancez ces trois commandes depuis la racine de votre clon
 ./giretra-manage.sh validate my-bot
 ```
 
-C'est le **strict minimum**. La validation fait tourner votre bot pendant 100 matchs contre `RandomPlayer` et vérifie les violations de règles, les crashs et les temps de réponse. Objectif : **zéro violation, zéro crash**.
+C'est le **strict minimum**. La validation fait tourner votre bot pendant 100 matchs contre `Kialasoa` et vérifie les violations de règles, les crashs et les temps de réponse. Objectif : **zéro violation, zéro crash**.
 
 Pour aller plus loin :
 
 | Option | Ce qu'elle fait |
 |--------|----------------|
 | `-n 500` | Lance plus de matchs pour gagner en fiabilité |
-| `-o CalculatingPlayer` | Teste contre un adversaire plus malin |
+| `-o Razavavy` | Teste contre un adversaire plus malin |
 | `-d` | Test de déterminisme : rejoue avec la même graine et vérifie que les décisions sont identiques |
 | `-v` | Mode verbeux : affiche chaque violation en détail |
 | `--timeout 200` | Signale toute réponse au-delà de 200ms comme violation |
@@ -32,13 +32,13 @@ Pour aller plus loin :
 Un bon passage de validation ressemble à ça :
 
 ```bash
-./giretra-manage.sh validate my-bot -n 500 -o CalculatingPlayer -d -v
+./giretra-manage.sh validate my-bot -n 500 -o Razavavy -d -v
 ```
 
 ### Benchmark
 
 ```bash
-./giretra-manage.sh benchmark my-bot CalculatingPlayer -n 500
+./giretra-manage.sh benchmark my-bot Razavavy -n 500
 ```
 
 Le benchmark vous donne les taux de victoire avec intervalles de confiance à 95%, les classements ELO et les tests de significativité sur 1000 matchs par défaut. Idéal pour mesurer précisément où se situe votre bot.
@@ -46,12 +46,12 @@ Le benchmark vous donne les taux de victoire avec intervalles de confiance à 95
 Testez contre les trois adversaires intégrés :
 
 ```bash
-./giretra-manage.sh benchmark my-bot RandomPlayer
-./giretra-manage.sh benchmark my-bot CalculatingPlayer
-./giretra-manage.sh benchmark my-bot DeterministicPlayer
+./giretra-manage.sh benchmark my-bot Kialasoa
+./giretra-manage.sh benchmark my-bot Razavavy
+./giretra-manage.sh benchmark my-bot Eva
 ```
 
-Si votre bot ne bat pas `RandomPlayer` régulièrement, il n'est pas prêt. S'il perd systématiquement contre `CalculatingPlayer`, mieux vaut itérer avant de publier.
+Si votre bot ne bat pas `Kialasoa` régulièrement, il n'est pas prêt. S'il perd systématiquement contre `Razavavy`, mieux vaut itérer avant de publier.
 
 ### Tournoi suisse
 
@@ -64,7 +64,7 @@ Cette commande détecte tous les bots (intégrés et externes) et lance un tourn
 Vous pouvez aussi restreindre les participants :
 
 ```bash
-./giretra-manage.sh swiss my-bot RandomPlayer CalculatingPlayer DeterministicPlayer
+./giretra-manage.sh swiss my-bot Kialasoa Razavavy Eva
 ```
 
 ### Essayez dans le navigateur
@@ -186,7 +186,7 @@ Si votre PR échoue en CI ou si les reviewers signalent des problèmes :
 2. **Relancez en local avec `-v`.** Le mode verbeux détaille chaque violation.
 3. **Testez avec une graine fixe.** Utilisez `-s 42` (ou n'importe quel nombre) pour reproduire exactement la même séquence de jeu. Le débogage devient déterministe.
 4. **Vérifiez votre script `init`.** Si votre bot refuse de démarrer, le problème vient souvent d'une dépendance manquante ou d'une erreur de build dans l'étape init.
-5. **Variez les adversaires.** Certains bugs ne se manifestent que face à certaines stratégies. `CalculatingPlayer` est particulièrement efficace pour révéler les cas limites grâce à ses ouvertures variées.
+5. **Variez les adversaires.** Certains bugs ne se manifestent que face à certaines stratégies. `Razavavy` est particulièrement efficace pour révéler les cas limites grâce à ses ouvertures variées.
 
 ## Après la fusion de votre bot
 

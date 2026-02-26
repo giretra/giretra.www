@@ -268,7 +268,7 @@ Toutes les commandes ci-dessous supposent que vous êtes à la racine de votre c
 
 ### Valider
 
-C'est la première commande à lancer. Elle fait jouer votre bot pendant 100 matchs contre `RandomPlayer` et vérifie que tout tourne :
+C'est la première commande à lancer. Elle fait jouer votre bot pendant 100 matchs contre `Kialasoa` et vérifie que tout tourne :
 
 ```bash
 ./giretra-manage.sh validate my-bot
@@ -281,23 +281,23 @@ Vous obtenez un rapport complet avec :
 - **Couverture des modes de jeu** (est-ce que votre bot a été testé sur les six modes)
 - **Tendance de performance** (stabilité des temps de réponse au fil de l'exécution)
 
-Vous pouvez affiner avec des options comme `-n 500` pour plus de matchs, `-o CalculatingPlayer` pour un adversaire plus coriace, `-d` pour un test de déterminisme, ou `-v` pour le détail de chaque violation.
+Vous pouvez affiner avec des options comme `-n 500` pour plus de matchs, `-o Razavavy` pour un adversaire plus coriace, `-d` pour un test de déterminisme, ou `-v` pour le détail de chaque violation.
 
 ### Benchmark
 
 Une fois la validation passée sans erreur, confrontez votre bot aux adversaires intégrés :
 
 ```bash
-./giretra-manage.sh benchmark my-bot RandomPlayer
-./giretra-manage.sh benchmark my-bot CalculatingPlayer
-./giretra-manage.sh benchmark my-bot DeterministicPlayer
+./giretra-manage.sh benchmark my-bot Kialasoa
+./giretra-manage.sh benchmark my-bot Razavavy
+./giretra-manage.sh benchmark my-bot Eva
 ```
 
 | Bot | Difficulté | Stratégie |
 |-----|-----------|----------|
-| `RandomPlayer` | Facile | Joue au hasard. Si vous n'arrivez pas à le battre, c'est qu'il y a un problème. |
-| `CalculatingPlayer` | Moyen | Suit les cartes et interprète les signaux du partenaire. |
-| `DeterministicPlayer` | Difficile | Comptage de cartes, détection de coupes, jeu positionnel. Le boss du moment. |
+| `Kialasoa` | Facile | Joue au hasard. Si vous n'arrivez pas à le battre, c'est qu'il y a un problème. |
+| `Razavavy` | Moyen | Suit les cartes et interprète les signaux du partenaire. |
+| `Eva` | Difficile | Comptage de cartes, détection de coupes, jeu positionnel. Le boss du moment. |
 
 Le benchmark joue 1000 matchs par défaut et produit les taux de victoire avec intervalles de confiance à 95%, les classements ELO et les tests de significativité. Utilisez `-n` pour changer le nombre de matchs.
 
@@ -433,7 +433,7 @@ Votre bot tourne en local et décide en local. Vous pouvez utiliser toutes les l
 
 ## Prochaines étapes
 
-Commencez par le bot le plus bête qui fonctionne. Validez-le. Puis rendez-le plus malin, une décision à la fois. Battez `RandomPlayer`, puis attaquez-vous à `CalculatingPlayer`, puis essayez de détrôner `DeterministicPlayer`.
+Commencez par le bot le plus bête qui fonctionne. Validez-le. Puis rendez-le plus malin, une décision à la fois. Battez `Kialasoa`, puis attaquez-vous à `Razavavy`, puis essayez de détrôner `Eva`.
 
 Prêt à passer aux choses sérieuses ? Suivez le guide [Publier votre Bot](/publish-your-bot/) pour ouvrir une pull request et rendre votre bot jouable sur [play.giretra.com](https://play.giretra.com).
 

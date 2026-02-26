@@ -3,7 +3,7 @@ title: Publish Your Bot
 description: Submit your bot to the Giretra repository and make it playable on play.giretra.com.
 ---
 
-Your bot beats `RandomPlayer` without breaking a sweat. It holds its own against `CalculatingPlayer`. Maybe it even gives `DeterministicPlayer` a hard time. Time to put it online and let real people play against it.
+Your bot beats `Kialasoa` without breaking a sweat. It holds its own against `Razavavy`. Maybe it even gives `Eva` a hard time. Time to put it online and let real people play against it.
 
 Publishing your bot means opening a pull request on the [giretra/giretra](https://github.com/giretra/giretra) repository. Once merged, your bot becomes available on [play.giretra.com](https://play.giretra.com), the online multiplayer platform where humans and bots compete in ranked matches.
 
@@ -17,14 +17,14 @@ Before you open a PR, run these three commands from the root of your Giretra clo
 ./giretra-manage.sh validate my-bot
 ```
 
-This is the **minimum requirement**. Validation plays your bot through 100 matches against `RandomPlayer` and checks for rule violations, crashes, and response time issues. Your target: **zero violations, zero crashes**.
+This is the **minimum requirement**. Validation plays your bot through 100 matches against `Kialasoa` and checks for rule violations, crashes, and response time issues. Your target: **zero violations, zero crashes**.
 
 Go further with these flags:
 
 | Flag | What it does |
 |------|-------------|
 | `-n 500` | Run more matches for higher confidence |
-| `-o CalculatingPlayer` | Test against a smarter opponent |
+| `-o Razavavy` | Test against a smarter opponent |
 | `-d` | Determinism check: runs twice with the same seed and verifies identical decisions |
 | `-v` | Verbose mode: shows every violation in detail |
 | `--timeout 200` | Flag any response slower than 200ms as a violation |
@@ -32,13 +32,13 @@ Go further with these flags:
 A solid validation run looks like this:
 
 ```bash
-./giretra-manage.sh validate my-bot -n 500 -o CalculatingPlayer -d -v
+./giretra-manage.sh validate my-bot -n 500 -o Razavavy -d -v
 ```
 
 ### Benchmark
 
 ```bash
-./giretra-manage.sh benchmark my-bot CalculatingPlayer -n 500
+./giretra-manage.sh benchmark my-bot Razavavy -n 500
 ```
 
 Benchmark gives you win rates with 95% confidence intervals, ELO ratings, and statistical significance over 1000 matches by default. Use it to measure exactly how your bot stacks up.
@@ -46,12 +46,12 @@ Benchmark gives you win rates with 95% confidence intervals, ELO ratings, and st
 Test against all three built-in opponents:
 
 ```bash
-./giretra-manage.sh benchmark my-bot RandomPlayer
-./giretra-manage.sh benchmark my-bot CalculatingPlayer
-./giretra-manage.sh benchmark my-bot DeterministicPlayer
+./giretra-manage.sh benchmark my-bot Kialasoa
+./giretra-manage.sh benchmark my-bot Razavavy
+./giretra-manage.sh benchmark my-bot Eva
 ```
 
-If your bot can't consistently beat `RandomPlayer`, it's not ready. If it loses every game against `CalculatingPlayer`, you probably want to iterate before publishing.
+If your bot can't consistently beat `Kialasoa`, it's not ready. If it loses every game against `Razavavy`, you probably want to iterate before publishing.
 
 ### Swiss tournament
 
@@ -64,7 +64,7 @@ This discovers all bots (built-in and external) and runs a full Swiss-system tou
 You can also limit participants:
 
 ```bash
-./giretra-manage.sh swiss my-bot RandomPlayer CalculatingPlayer DeterministicPlayer
+./giretra-manage.sh swiss my-bot Kialasoa Razavavy Eva
 ```
 
 ### Test in the browser
@@ -186,7 +186,7 @@ If your PR fails CI or reviewers flag issues:
 2. **Run locally with `-v`.** Verbose mode shows every violation in detail.
 3. **Test with a fixed seed.** Use `-s 42` (or any number) to reproduce the exact same game sequence. This makes debugging deterministic.
 4. **Check your `init` script.** If your bot fails to start, the issue is often a missing dependency or a build error in the init step.
-5. **Try different opponents.** Some bugs only surface against certain strategies. `CalculatingPlayer` is particularly good at exposing edge cases because it plays more varied openings.
+5. **Try different opponents.** Some bugs only surface against certain strategies. `Razavavy` is particularly good at exposing edge cases because it plays more varied openings.
 
 ## After your bot is merged
 

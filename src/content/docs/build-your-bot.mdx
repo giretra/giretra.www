@@ -268,7 +268,7 @@ All commands below assume you're at the root of your [Giretra](https://github.co
 
 ### Validate
 
-The first command you should run. It plays your bot through 100 matches against `RandomPlayer` and checks everything works:
+The first command you should run. It plays your bot through 100 matches against `Kialasoa` and checks everything works:
 
 ```bash
 ./giretra-manage.sh validate my-bot
@@ -281,23 +281,23 @@ You get a full report with:
 - **Game mode coverage** (whether your bot was tested across all six game modes)
 - **Performance trend** (response time stability across the run)
 
-You can tweak the run with flags like `-n 500` for more matches, `-o CalculatingPlayer` for a tougher opponent, `-d` for a determinism check, or `-v` for verbose violation details.
+You can tweak the run with flags like `-n 500` for more matches, `-o Razavavy` for a tougher opponent, `-d` for a determinism check, or `-v` for verbose violation details.
 
 ### Benchmark
 
 Once your bot validates clean, pit it against the built-in opponents:
 
 ```bash
-./giretra-manage.sh benchmark my-bot RandomPlayer
-./giretra-manage.sh benchmark my-bot CalculatingPlayer
-./giretra-manage.sh benchmark my-bot DeterministicPlayer
+./giretra-manage.sh benchmark my-bot Kialasoa
+./giretra-manage.sh benchmark my-bot Razavavy
+./giretra-manage.sh benchmark my-bot Eva
 ```
 
 | Bot | Difficulty | Strategy |
 |-----|-----------|----------|
-| `RandomPlayer` | Easy | Picks randomly. If you can't beat it, something's wrong. |
-| `CalculatingPlayer` | Medium | Tracks cards and reads partner signals. |
-| `DeterministicPlayer` | Hard | Card counting, void inference, positional play. The current boss. |
+| `Kialasoa` | Easy | Picks randomly. If you can't beat it, something's wrong. |
+| `Razavavy` | Medium | Tracks cards and reads partner signals. |
+| `Eva` | Hard | Card counting, void inference, positional play. The current boss. |
 
 The benchmark runs 1000 matches by default and gives you win rates with 95% confidence intervals, ELO ratings, and statistical significance. Use `-n` to change the match count.
 
@@ -433,7 +433,7 @@ Your bot runs locally, makes decisions locally. You can use whatever local libra
 
 ## Next steps
 
-Start with the dumbest bot that works. Validate it. Then make it smarter, one decision at a time. Beat `RandomPlayer`, then go after `CalculatingPlayer`, then try to dethrone `DeterministicPlayer`.
+Start with the dumbest bot that works. Validate it. Then make it smarter, one decision at a time. Beat `Kialasoa`, then go after `Razavavy`, then try to dethrone `Eva`.
 
 Ready to go live? Follow the [Publish Your Bot](/publish-your-bot/) guide to open a pull request and make your bot playable on [play.giretra.com](https://play.giretra.com).
 

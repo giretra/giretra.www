@@ -3,7 +3,7 @@ title: Publier ny Bot-nao
 description: Alefaso ny bot-nao ao amin'ny dépôt Giretra ary ataovy azo lalaoina amin'ny play.giretra.com.
 ---
 
-Ny bot-nao maharesy `RandomPlayer` tsy mila mikofoka. Mahatohitra `CalculatingPlayer` izy. Angamba aza mampijaly `DeterministicPlayer` izy. Fotoana izao hametrahana azy amin'ny internet sy hampiady azy amin'ny mpilalao tena izy.
+Ny bot-nao maharesy `Kialasoa` tsy mila mikofoka. Mahatohitra `Razavavy` izy. Angamba aza mampijaly `Eva` izy. Fotoana izao hametrahana azy amin'ny internet sy hampiady azy amin'ny mpilalao tena izy.
 
 Ny famoahana ny bot-nao dia midika fanokafana pull request amin'ny dépôt [giretra/giretra](https://github.com/giretra/giretra). Rehefa merged, ny bot-nao dia ho hita amin'ny [play.giretra.com](https://play.giretra.com), ny plateforme multijoueur amin'ny internet izay ifanandrinan'ny olombelona sy bot amin'ny matchs classés.
 
@@ -17,14 +17,14 @@ Alohan'ny hanokafanao PR, alefaso ireto baiko telo ireto avy amin'ny fototry ny 
 ./giretra-manage.sh validate my-bot
 ```
 
-Ity no **fepetra farany ambany**. Ny fanamarinana dia mampilalao ny bot-nao amin'ny match 100 amin'ny `RandomPlayer` ary manamarina raha misy fandikana fitsipika, crash, sy olana amin'ny fotoana famaliana. Ny tanjonao : **tsy misy fandikana, tsy misy crash**.
+Ity no **fepetra farany ambany**. Ny fanamarinana dia mampilalao ny bot-nao amin'ny match 100 amin'ny `Kialasoa` ary manamarina raha misy fandikana fitsipika, crash, sy olana amin'ny fotoana famaliana. Ny tanjonao : **tsy misy fandikana, tsy misy crash**.
 
 Mandrosoa kokoa amin'ireto option ireto :
 
 | Option | Izay ataony |
 |--------|------------|
 | `-n 500` | Mampitombo ny isan'ny match ho an'ny confiance ambony kokoa |
-| `-o CalculatingPlayer` | Mitsapa amin'ny mpifanandrina maranitra kokoa |
+| `-o Razavavy` | Mitsapa amin'ny mpifanandrina maranitra kokoa |
 | `-d` | Fitsapana déterminisme : milalao indroa amin'ny graine mitovy ary manamarina fa mitovy ny fanapahan-kevitra |
 | `-v` | Mode verbeux : mampiseho ny fandikana tsirairay amin'ny antsipiriany |
 | `--timeout 200` | Manamarika ny valin-teny mihoatra ny 200ms ho fandikana |
@@ -32,13 +32,13 @@ Mandrosoa kokoa amin'ireto option ireto :
 Ny run de validation mafy orina dia toy izao :
 
 ```bash
-./giretra-manage.sh validate my-bot -n 500 -o CalculatingPlayer -d -v
+./giretra-manage.sh validate my-bot -n 500 -o Razavavy -d -v
 ```
 
 ### Benchmark
 
 ```bash
-./giretra-manage.sh benchmark my-bot CalculatingPlayer -n 500
+./giretra-manage.sh benchmark my-bot Razavavy -n 500
 ```
 
 Ny benchmark manome anao ny taha-pandresena miaraka amin'ny intervalle de confiance 95%, ny classement ELO ary ny signification statistique amin'ny match 1000 amin'ny ankapobeny. Ampiasao izy handrefesana tsara ny toeran'ny bot-nao.
@@ -46,12 +46,12 @@ Ny benchmark manome anao ny taha-pandresena miaraka amin'ny intervalle de confia
 Tsapao amin'ny mpifanandrina voarafitra telo :
 
 ```bash
-./giretra-manage.sh benchmark my-bot RandomPlayer
-./giretra-manage.sh benchmark my-bot CalculatingPlayer
-./giretra-manage.sh benchmark my-bot DeterministicPlayer
+./giretra-manage.sh benchmark my-bot Kialasoa
+./giretra-manage.sh benchmark my-bot Razavavy
+./giretra-manage.sh benchmark my-bot Eva
 ```
 
-Raha tsy maharesy `RandomPlayer` tsy tapaka ny bot-nao, tsy vonona izy. Raha very daholo ny match amin'ny `CalculatingPlayer`, tsara raha manatsara alohan'ny famoahana.
+Raha tsy maharesy `Kialasoa` tsy tapaka ny bot-nao, tsy vonona izy. Raha very daholo ny match amin'ny `Razavavy`, tsara raha manatsara alohan'ny famoahana.
 
 ### Tournoi suisse
 
@@ -64,7 +64,7 @@ Io baiko io mahita ny bot rehetra (voarafitra sy externe) ary mandefa tournoi au
 Afaka mametra ny mpandray anjara koa ianao :
 
 ```bash
-./giretra-manage.sh swiss my-bot RandomPlayer CalculatingPlayer DeterministicPlayer
+./giretra-manage.sh swiss my-bot Kialasoa Razavavy Eva
 ```
 
 ### Andramo ao amin'ny navigateur
@@ -186,7 +186,7 @@ Raha tsy mandeha ny PR anao amin'ny CI na raha misy olana hitan'ny reviewers :
 2. **Alefaso eo an-toerana amin'ny `-v`.** Ny mode verbeux mampiseho ny fandikana tsirairay amin'ny antsipiriany.
 3. **Tsapao amin'ny graine voafaritra.** Ampiasao `-s 42` (na isa hafa) hamerenana ny tena séquence lalao mitovy. Mahatonga ny debugging ho déterministe izany.
 4. **Hamarino ny script `init` anao.** Raha tsy manomboka ny bot-nao, ny olana matetika dia dépendance tsy ampy na erreur de build amin'ny étape init.
-5. **Andramo mpifanandrina samihafa.** Misy bug tsy mipoitra afa-tsy amin'ny stratégie sasany. `CalculatingPlayer` dia tena mahomby amin'ny fampisehoana cas limites satria milalao ouverture maro samihafa izy.
+5. **Andramo mpifanandrina samihafa.** Misy bug tsy mipoitra afa-tsy amin'ny stratégie sasany. `Razavavy` dia tena mahomby amin'ny fampisehoana cas limites satria milalao ouverture maro samihafa izy.
 
 ## Aorian'ny fusion ny bot-nao
 
