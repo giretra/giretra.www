@@ -1,12 +1,12 @@
 ---
-title: Giretra
-description: Un jeu open source — jouez, apprenez, construisez, contribuez.
+title: Un terrain de jeu numérique<br/> pour la Belote à la malgache
+description: Un jeu open source de belote malgache. Jouez, apprenez, construisez, contribuez.
 template: splash
 hero:
-  tagline: "Votre plateforme et SDK de Belote Gasy : jouez avec vos amis ou entraînez-vous seul, créez vos propres bots et contribuez à une plateforme open source vivante."
+  tagline: "Jouez avec vos amis ou entraînez-vous seul, créez vos propres bots et participez à la croissance d'un jeu culturel malgache emblématique, construit dans l'esprit open source."
   actions:
-    - text: Jouer
-      link: https://play.giretra.com
+    - text: Jouer en ligne
+      link: https://play.giretra.com/
       icon: external
     - text: Apprendre les règles
       link: /fr/learn/
@@ -27,6 +27,31 @@ import Card from "~/components/user-components/NewCard.astro";
 import Grid from "~/components/user-components/Grid.astro";
 import LinkButton from "~/components/LinkButton.astro";
 import ListCard from "~/components/user-components/ListCard.astro";
+import LangCard from "~/components/user-components/LangCard.astro";
+import LangGrid from "~/components/user-components/LangGrid.astro";
+
+<Section title="Jouez en ligne <span class='light-text'>avec le monde entier</span>" description="Créez une salle, invitez des amis et grimpez en haut du classement.">
+
+<Grid columns={4}>
+  <Card title="Multijoueur en temps réel" icon="laptop" iconColor="#6EC5FF">
+    Créez des salles avec des paramètres personnalisés, partagez un lien d'invitation et jouez instantanément. Déconnecté ? Reconnectez-vous en pleine partie sans perdre votre progression.
+  </Card>
+  <Card title="Classements compétitifs" icon="star" iconColor="#FFB86C">
+    Grimpez le classement Elo avec un score basé sur la marge. Suivez vos statistiques, vos séries de victoires et gagnez des badges.
+  </Card>
+  <Card title="6 modes de jeu" icon="puzzle" iconColor="#C792EA">
+    De Couleur à Tout Atout, chaque mode ajoute des couches de stratégie. Négociez, contrez et tentez le capot pour une victoire instantanée.
+  </Card>
+  <Card title="Jouez partout" icon="translate" iconColor="#82AAFF">
+    Compatible mobile et disponible en malgache, français et anglais. Jouez depuis n'importe quel appareil avec une interface immersive.
+  </Card>
+</Grid>
+
+<div class="flex justify-center mt-10">
+  <a href="https://play.giretra.com/" class="btn btn-primary text-lg! px-8! py-4! no-underline!">Commencer à jouer &rarr;</a>
+</div>
+
+</Section>
 
 <Section title="Tout ce qu'il faut <span class='light-text'>pour commencer</span>" description="Le Giretra est un jeu de plis originaire de Madagascar, né de la famille de la Belote. Quatre joueurs, deux équipes, 32 cartes.">
 
@@ -47,133 +72,26 @@ import ListCard from "~/components/user-components/ListCard.astro";
 
 </Section>
 
-<Section title="Ce qui rend le Giretra <span class='light-text'>différent</span>" description="Si vous avez joué à la Belote, vous en êtes à 80 %. Voici les 20 % qui comptent.">
+<Section title="Créez votre bot <span class='light-text'>dans votre langage</span>" description="Des templates prêts à l'emploi pour vous concentrer sur la stratégie, pas le boilerplate. Choisissez votre langage, dupliquez un dossier, éditez un fichier.">
 
-<Grid columns={3}>
-<ListCard title="Modes de jeu" imageIcon="/src/assets/element.svg" number="6">
-- Couleur (4 enseignes)
-- Sans Atout
-- Tout Atout
-- Contré / Surcontré
-- Négociation à l'aveugle
-- Pas de carte retournée
+<LangGrid>
+  <LangCard name="Python" logo="/src/assets/lang-python.svg">
+    Template typé avec une structure POO claire.
+  </LangCard>
+  <LangCard name="TypeScript" logo="/src/assets/lang-typescript.svg">
+    Template entièrement typé avec des modules ES modernes.
+  </LangCard>
+  <LangCard name="C#" logo="/src/assets/lang-csharp.svg">
+    Template .NET 10 propulsé par ASP.NET Core.
+  </LangCard>
+  <LangCard name="Go" logo="/src/assets/lang-go.svg">
+    Compilé en binaire natif. Zéro dépendance.
+  </LangCard>
+  <LangCard name="Java" logo="/src/assets/lang-java.svg">
+    Java 17+ avec Maven. Packagé en un seul JAR.
+  </LangCard>
+</LangGrid>
 
-<LinkButton href="/fr/learn/" variant="text" className="mt-6 mb-8 ml-4">Apprendre les règles</LinkButton>
-</ListCard>
-
-<ListCard title="Mécaniques uniques" imageIcon="/src/assets/content.svg" number="5">
-- Pas de mélange — juste couper
-- Aucune déclaration
-- Enchères par négociation
-- Score par points de partie
-- Capot = victoire instantanée (Couleur)
-
-<LinkButton href="/fr/coming-from-belote/" variant="text" className="mt-6 mb-8 ml-4">Venir de la Belote ?</LinkButton>
-</ListCard>
-
-<ListCard title="Trois langues" imageIcon="/src/assets/layouts.svg" number="3">
-- Termes anglais
-- Français (racines de la Belote)
-- Malgache (termes locaux)
-- Glossaire complet inclus
-- Contributions de la communauté bienvenues
-- Ouvrez une issue pour aider
-
-<LinkButton href="/fr/vocabulary/" variant="text" className="mt-6 mb-8 ml-4">Voir le vocabulaire</LinkButton>
-</ListCard>
-</Grid>
-
-</Section>
-
-import AccordionContainer from "~/components/AccordionContainer.astro";
-import Accordion from "~/components/Accordion.astro";
-
-<Section
-  title="Questions fréquentes <span class='light-text'>sur le Giretra</span>"
-  description="Réponses rapides pour bien démarrer."
->
-
-<AccordionContainer tabList={
-  [
-    {
-      type: 'basics',
-      title: 'Les bases',
-      subtitle: 'Qu\'est-ce que le Giretra et comment y jouer ?',
-      icon: "rocket"
-    },
-    {
-      type: 'differences',
-      title: 'Belote vs Giretra',
-      subtitle: 'Les différences clés avec la Belote française.',
-      icon: "settings"
-    },
-    {
-      type: 'platform',
-      title: 'La plateforme',
-      subtitle: 'Jouer en ligne et créer des bots.',
-      icon: "support"
-    }
-  ]
-}>
-
-<Accordion
-  question="Combien de joueurs faut-il ?"
-  answer="Quatre joueurs, répartis en deux équipes. Les coéquipiers s'assoient face à face. Le jeu se déroule dans le sens des aiguilles d'une montre."
-  type="basics"
-/>
-<Accordion
-  question="Quelles cartes sont utilisées ?"
-  answer="Un jeu standard de 32 cartes : quatre enseignes (Pique, Cœur, Carreau, Trèfle), chacune avec A, R, D, V, 10, 9, 8, 7. Pas de cartes en dessous du 7."
-  type="basics"
-/>
-<Accordion
-  question="Pourquoi le jeu n'est-il jamais mélangé ?"
-  answer="C'est une tradition du Giretra. Avant chaque donne, le joueur à gauche du donneur coupe le jeu. Divisez-le en deux moitiés et mettez la partie du bas sur le dessus."
-  type="basics"
-/>
-<Accordion
-  question="Quel est le score gagnant ?"
-  answer="La première équipe à atteindre 150 points de partie gagne. Si les deux équipes dépassent 150 dans la même donne, l'objectif passe à 250, puis 350, et ainsi de suite."
-  type="basics"
-/>
-
-<Accordion
-  question="Y a-t-il une carte retournée comme à la Belote ?"
-  answer="Non. Le Giretra n'a pas de carte retournée. Le premier joueur doit annoncer un mode de jeu, et la négociation commence à partir de là. On enchérit à l'aveugle selon sa main."
-  type="differences"
-/>
-<Accordion
-  question="Y a-t-il des déclarations (belote-rebelote, séquences) ?"
-  answer="Non. Le Giretra n'a aucune déclaration. Pas de belote-rebelote, pas de séquences, pas de carrés. Les points viennent exclusivement des plis et du bonus du dernier pli."
-  type="differences"
-/>
-<Accordion
-  question="Quels modes de jeu existent ?"
-  answer="Six modes classés du plus bas au plus haut : Couleur Trèfle, Couleur Carreau, Couleur Cœur, Couleur Pique, Sans Atout, Tout Atout. On ne peut enchérir qu'au-dessus de l'enchère en cours."
-  type="differences"
-/>
-<Accordion
-  question="Que se passe-t-il avec un capot ?"
-  answer="En Tout Atout : 35 points de partie. En Sans Atout : 90 points de partie. En Couleur : vous gagnez la partie entière sur-le-champ, quel que soit le score."
-  type="differences"
-/>
-
-<Accordion
-  question="Peut-on jouer en ligne ?"
-  answer="Oui ! Rendez-vous sur play.giretra.com pour jouer avec des amis ou vous entraîner en solo."
-  type="platform"
-/>
-<Accordion
-  question="Peut-on créer un bot ?"
-  answer="C'est prévu. Le SDK et la documentation pour créer des bots arrivent bientôt. Consultez la section Créer votre Bot pour les mises à jour."
-  type="platform"
-/>
-<Accordion
-  question="Le Giretra est-il open source ?"
-  answer="Entièrement open source. Le moteur de jeu, la plateforme et cette documentation sont tous sur GitHub. Les contributions sont les bienvenues."
-  type="platform"
-/>
-
-</AccordionContainer>
+<LinkButton href="/fr/build-your-bot/" variant="text" className="mt-8 ml-1">Commencer à construire</LinkButton>
 
 </Section>
