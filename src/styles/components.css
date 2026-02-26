@@ -1,5 +1,5 @@
 .section {
-  @apply py-16! xl:py-24!;
+  @apply py-10! xl:py-14!;
 }
 
 /* container */
