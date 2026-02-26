@@ -16,7 +16,7 @@
   "params": {
     "footer_contact": {
       "enable": true,
-      "action": "#"
+      "feedback_url": "https://github.com/giretra/giretra/issues"
     },
     "copyright": "Giretra &mdash; Open Source. &copy; 2025."
   },
