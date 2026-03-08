@@ -2,7 +2,7 @@
 
 Documentation and community website for [Giretra](https://play.giretra.com), an open-source Malagasy trick-taking card game for 4 players in 2 teams.
 
-The site covers game rules, bot development guides, and contribution guidelines — available in English, French, and Malagasy.
+The site covers game rules, bot development guides, and contribution guidelines: available in English, French, and Malagasy.
 
 ## Build
 
